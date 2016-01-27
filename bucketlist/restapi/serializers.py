@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import Bucketlist, BucketlistItem
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     """Defines the user api representation"""
     class Meta:
         model = User
         fields = ('username', 'email')
+
 
 class BucketlistSerializer(serializers.ModelSerializer):
     """Defines the bucketlist api representation"""
@@ -19,26 +22,31 @@ class BucketlistSerializer(serializers.ModelSerializer):
             """Retrieves the creator of the bucketlist"""
             return obj.user.id
 
+
 class ActionableBucketlistSerializer(serializers.ModelSerializer):
     """Defines an actionable bucketlist with child items"""
     items = serializers.SerializerMethodField('get_bucketlistitems')
 
     class Meta:
         models = Bucketlist
-        fields = ('id', 'name', 'items', 'date_created', 'date_modified', 'created_by')
+        fields = (
+            'id', 'name', 'items',
+            'date_created', 'date_modified', 'created_by')
 
     def get_bucketlistitems(self, obj):
         """Returns a serializable list of bucketlist items"""
-        queryset = list(BucketlistItems.objects.filter(bucketlist=obj))
+        queryset = list(BucketlistItem.objects.filter(bucketlist=obj))
         return [
             BucketlistItemSerializer(item).data for item in queryset
         ]
 
+
 class BucketlistItemSerializer(serializers.ModelSerializer):
     """Defines the bucketlist api representation"""
     class Meta:
-        model = BucketlistItems
+        model = BucketlistItem
         fields = ('id', 'name', 'done', 'date_created', 'date_modified')
+
 
 class BucketlistItemCreateSerializer(serializers.ModelSerializer):
     """Defines the bucketlist item API representation for
@@ -46,6 +54,3 @@ class BucketlistItemCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BucketlistItem
-
-
-

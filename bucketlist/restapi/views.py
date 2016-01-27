@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializers import BucketlistSerializer, UserSerializer, \
-    BucketlistItemsSerializer, ActionableBucketlistSerializer
+    BucketlistItemSerializer, ActionableBucketlistSerializer
 from models import Bucketlist, BucketlistItem
 
 
@@ -46,7 +46,7 @@ class BucketlistDetailView(generics.RetrieveUpdateDestroyAPIView):
 class BucketlistItemCreateView(generics.ListCreateAPIView):
     """Defines the bucketlist item creation behavior"""
     model = BucketlistItem
-    serializer_class = BucketlistItemsSerializer
+    serializer_class = BucketlistItemSerializer
 
     def get_queryset(self):
         """Specifies the queryset used for the serialization"""
@@ -69,10 +69,10 @@ class BucketlistItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Defines an actionable bucketlist item view
        with Read, Update and Delete"""
     queryset = BucketlistItem
-    serializer_class = BucketlistItemsSerializer
+    serializer_class = BucketlistItemSerializer
 
     def get_object(self):
         """Specifies the object used retrieve, update, destroy actions"""
-        pk = self.kwargs.get('pk')
+        pk_item = self.kwargs.get('pk')
         # return an object of bucketlist items or raise a 404 if NotExists
-        return get_object_or_404(BucketlistItem, pk=pk)
+        return get_object_or_404(BucketlistItem, pk=pk_item)

@@ -16,7 +16,6 @@ class BaseModel(models.Model):
 class UserProfile(BaseModel):
     """A model representation of the user"""
     bio = models.TextField(blank=True, null=True)
-    age = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User)
 
 

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import resapi.views as views
+import restapi.views as views
 
 urlpatterns = [
     url(r'^bucketlists/$',
@@ -14,7 +14,7 @@ urlpatterns = [
         views.BucketlistItemCreateView.as_view(),
         name="api.bucketlistitem.create"),
 
-    url(r'^bucketlists/(?P<pk>[0-9]+)/items/(?P<pk>[0-9]+)$',
+    url(r'^bucketlists/(?P<pk>[0-9]+)/items/(?P<pk_item>[0-9]+)$',
         views.BucketlistItemDetailView.as_view(),
         name="api.bucketlist.item")
 
