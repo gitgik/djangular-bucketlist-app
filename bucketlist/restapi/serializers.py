@@ -3,15 +3,20 @@ from rest_framework import serializers
 from .models import Bucketlist, BucketlistItem
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """Defines the user api representation"""
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('id', 'username', 'password')
 
     def create(self, validated_data):
         """Creates and returns a new user"""
-        return User.objects.create(**validated_data)
+        user = User(
+            username=validated_data['username'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class BucketlistSerializer(serializers.ModelSerializer):
