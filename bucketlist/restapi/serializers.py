@@ -19,17 +19,26 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class BucketlistSerializer(serializers.ModelSerializer):
+class BucketlistItemSerializer(serializers.ModelSerializer):
     """Defines the bucketlist api representation"""
-    created_by = serializers.SerializerMethodField('get_creator')
+    class Meta:
+        model = BucketlistItem
+        fields = ('id', 'name', 'done', 'date_created', 'date_modified')
+        read_only_fields = ('items', 'date_created', 'date_modified')
+
+
+class BucketlistSerializer(serializers.ModelSerializer):
+    """Defines an actionable bucketlist with child items"""
+
+    items = BucketlistItemSerializer(many=True, read_only=True)
+    created_by = serializers.ReadOnlyField(source='created_by.username')
 
     class Meta:
         model = Bucketlist
-        fields = ('id', 'name', 'date_created', 'date_modified', 'created_by')
-
-        def get_creator(self, obj):
-            """Retrieves the creator of the bucketlist"""
-            return obj.user.id
+        fields = (
+            'id', 'name', 'items',
+            'date_created', 'date_modified', 'created_by'
+        )
 
 
 class ActionableBucketlistSerializer(serializers.ModelSerializer):
@@ -48,13 +57,6 @@ class ActionableBucketlistSerializer(serializers.ModelSerializer):
         return [
             BucketlistItemSerializer(item).data for item in queryset
         ]
-
-
-class BucketlistItemSerializer(serializers.ModelSerializer):
-    """Defines the bucketlist api representation"""
-    class Meta:
-        model = BucketlistItem
-        fields = ('id', 'name', 'done', 'date_created', 'date_modified')
 
 
 class BucketlistItemCreateSerializer(serializers.ModelSerializer):

@@ -3,21 +3,18 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from restapi import views
 
 urlpatterns = [
-    url(r'^auth/register/$',
-        views.UserView.as_view(),
+    url(r'^auth/register/$', views.UserView.as_view(),
         name='register'),
-    url(r'^auth_token/',
-        'rest_framework_jwt.views.obtain_jwt_token',
-        name='login'),
-    url(r'^auth_verify/',
-        'rest_framework_jwt.views.verify_jwt_token'),
 
-    url(r'^bucketlists/$',
-        views.BucketlistView.as_view(),
+    url(r'^auth_token/', 'rest_framework_jwt.views.obtain_jwt_token',
+        name='login'),
+
+    url(r'^auth_verify/', 'rest_framework_jwt.views.verify_jwt_token'),
+
+    url(r'^bucketlists/$', views.BucketlistView.as_view(),
         name='api.bucketlists'),
 
-    url(r'^bucketlists/(?P<pk>[0-9]+)/$',
-        views.BucketlistDetailView.as_view(),
+    url(r'^bucketlists/(?P<pk>[0-9]+)/$', views.BucketlistDetailView.as_view(),
         name="api.bucketlist"),
 
     url(r'^bucketlists/(?P<pk>[0-9]+)/items/$',

@@ -1,10 +1,9 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework import generics
-from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from .serializers import BucketlistSerializer, UserSerializer, \
-    BucketlistItemSerializer, ActionableBucketlistSerializer
+    BucketlistItemSerializer
 from models import Bucketlist, BucketlistItem
 
 
@@ -25,17 +24,17 @@ class BucketlistView(generics.ListCreateAPIView):
         q = self.request.GET.get('q', None)
         if q:
             return Bucketlist.search(q)
-        return Bucketlist.objects.filter(user=self.request.user)
+        return Bucketlist.objects.filter(created_by=self.request.user)
 
     def perform_create(self, serializer):
         """Saves the serialize POST data when creating a new bucketlist"""
-        serializer.save(user_id=self.request.user.id)
+        serializer.save(created_by=self.request.user)
 
 
 class BucketlistDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Defines an actionable bucketlist view with Read, Update and Delete"""
-    queryset = Bucketlist
-    serializer_class = ActionableBucketlistSerializer
+    queryset = Bucketlist.objects.all()
+    serializer_class = BucketlistSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_query(self):
