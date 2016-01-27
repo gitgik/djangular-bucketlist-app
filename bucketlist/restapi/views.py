@@ -1,13 +1,13 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from rest_framework import generics, viewsets
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import BucketlistSerializer, UserSerializer, \
     BucketlistItemSerializer, ActionableBucketlistSerializer
 from models import Bucketlist, BucketlistItem
 
 
-class UserView(viewsets.ModelViewSet):
+class UserView(generics.CreateAPIView):
     """Defines the user view"""
     queryset = User.objects.all()
     serializer_class = UserSerializer

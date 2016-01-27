@@ -9,6 +9,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('username', 'email')
 
+    def create(self, validated_data):
+        """Creates and returns a new user"""
+        return User.objects.create(**validated_data)
+
 
 class BucketlistSerializer(serializers.ModelSerializer):
     """Defines the bucketlist api representation"""
