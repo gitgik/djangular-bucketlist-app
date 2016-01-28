@@ -24,7 +24,7 @@ class BucketlistItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BucketlistItem
         fields = ('id', 'name', 'done', 'date_created', 'date_modified')
-        read_only_fields = ('items', 'date_created', 'date_modified')
+        read_only_fields = ('date_modified', 'date_created', 'name')
 
 
 class BucketlistSerializer(serializers.ModelSerializer):
@@ -37,26 +37,8 @@ class BucketlistSerializer(serializers.ModelSerializer):
         model = Bucketlist
         fields = (
             'id', 'name', 'items',
-            'date_created', 'date_modified', 'created_by'
-        )
-
-
-class ActionableBucketlistSerializer(serializers.ModelSerializer):
-    """Defines an actionable bucketlist with child items"""
-    items = serializers.SerializerMethodField('get_bucketlistitems')
-
-    class Meta:
-        models = Bucketlist
-        fields = (
-            'id', 'name', 'items',
             'date_created', 'date_modified', 'created_by')
-
-    def get_bucketlistitems(self, obj):
-        """Returns a serializable list of bucketlist items"""
-        queryset = list(BucketlistItem.objects.filter(bucketlist=obj))
-        return [
-            BucketlistItemSerializer(item).data for item in queryset
-        ]
+        read_only_fields = ('items', 'date_created', 'date_modified')
 
 
 class BucketlistItemCreateSerializer(serializers.ModelSerializer):

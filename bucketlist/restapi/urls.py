@@ -6,9 +6,8 @@ urlpatterns = [
     url(r'^auth/register/$', views.UserView.as_view(),
         name='register'),
 
-    url(r'^auth_token/', 'rest_framework_jwt.views.obtain_jwt_token',
+    url(r'^auth/', 'rest_framework_jwt.views.obtain_jwt_token',
         name='login'),
-
     url(r'^auth_verify/', 'rest_framework_jwt.views.verify_jwt_token'),
 
     url(r'^bucketlists/$', views.BucketlistView.as_view(),
