@@ -37,15 +37,10 @@ class BucketlistDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BucketlistSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_query(self):
-        """Specifies the object used for retrieve,
-            update, and destrory actions"""
-        return get_object_or_404(Bucketlist, pk=self.kwargs.get('pk'))
-
 
 class BucketlistItemCreateView(generics.ListCreateAPIView):
     """Defines the bucketlist item creation behavior"""
-    model = BucketlistItem
+    queryset = BucketlistItem
     serializer_class = BucketlistItemSerializer
 
     def get_queryset(self):
@@ -53,7 +48,7 @@ class BucketlistItemCreateView(generics.ListCreateAPIView):
         pk = self.kwargs.get('pk')
         bucketlist = get_object_or_404(Bucketlist, pk=pk)
         return BucketlistItem.objects.filter(
-            user=self.request.user, bucketlist=bucketlist)
+            created_by=self.request.user, bucketlist=bucketlist)
 
     def perform_create(self, serializer):
         """Saves the serialize POST data to create a new bucketlist item"""
@@ -61,18 +56,18 @@ class BucketlistItemCreateView(generics.ListCreateAPIView):
         bucketlist = get_object_or_404(
             Bucketlist,
             pk=pk,
-            user_id=self.request.user.id)
-        serializer.save(bucketlist=bucketlist, user_id=self.request.user.id)
+            created_by=self.request.user)
+        serializer.save(bucketlist=bucketlist, created_by=self.request.user)
 
 
 class BucketlistItemDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Defines an actionable bucketlist item view
        with Read, Update and Delete"""
-    queryset = BucketlistItem
+    queryset = BucketlistItem.objects.all()
     serializer_class = BucketlistItemSerializer
 
     def get_object(self):
-        """Specifies the object used retrieve, update, destroy actions"""
-        pk_item = self.kwargs.get('pk')
-        # return an object of bucketlist items or raise a 404 if NotExists
+        """Specifies the object used for `update`,
+         `retrieve`, `destroy` actions"""
+        pk_item = self.kwargs.get('pk_item')
         return get_object_or_404(BucketlistItem, pk=pk_item)
