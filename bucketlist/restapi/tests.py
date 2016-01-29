@@ -44,8 +44,26 @@ class BucketlistTestCase(SetUpMixin, APITestCase):
             reverse('api.bucketlists'), bucketlist_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_user_can_update_bucketlist(self):
+    def test_user_can_view_bucketlist(self):
         """Tests that the authenticated user can create a Bucketlist"""
+        rv = self.client.post('/auth/', data=self.user_data)
+        self.assertContains(rv, 'token', status_code=200)
+        jwt_token = json.loads(rv.content)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
+        bucketlist_data = {'name': 'After I get to D1...'}
+        response = self.client.post(
+            reverse('api.bucketlists'), bucketlist_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        bucketlist = Bucketlist.objects.get()
+        res = self.client.get(
+            reverse('api.bucketlist', kwargs={'pk': bucketlist.id}),
+            format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_user_can_update_bucketlist(self):
+        """Tests that the authenticated user can update a Bucketlist"""
         rv = self.client.post('/auth/', data=self.user_data)
         self.assertContains(rv, 'token', status_code=200)
         jwt_token = json.loads(rv.content)
@@ -89,9 +107,29 @@ class BucketlistTestCase(SetUpMixin, APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
+class BucketlistItemTestCase(SetUpMixin, APITestCase):
+    """Test Suite for users action on a bucketlist item"""
 
+    def test_user_can_create_bucketlist_item(self):
+        """Ensures that user can make a bucketlist item"""
+        rv = self.client.post('/auth/', data=self.user_data)
+        self.assertContains(rv, 'token', status_code=200)
+        jwt_token = json.loads(rv.content)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
+        bucketlist_data = {'name': 'Before I get to D1'}
+        response = self.client.post(
+            reverse('api.bucketlists'),
+            bucketlist_data,
+            format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-
+        bucketlist_item_data = {'name': 'Make a drone...'}
+        res = self.client.post(
+            reverse('api.bucketlistitem.create', kwargs={'pk': 1}),
+            bucketlist_item_data, format='json')
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
 
 
