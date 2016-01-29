@@ -3,10 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from restapi import views
 
 urlpatterns = [
-    url(r'^auth/register/$', views.UserView.as_view(),
-        name='register'),
-
-    url(r'^auth/', 'rest_framework_jwt.views.obtain_jwt_token',
+    url(r'^auth', 'rest_framework_jwt.views.obtain_jwt_token',
         name='login'),
     url(r'^auth_verify/', 'rest_framework_jwt.views.verify_jwt_token'),
 

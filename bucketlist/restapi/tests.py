@@ -11,21 +11,21 @@ import json
 faker_instance = Faker()
 
 
-class SetupMixin(object):
+class SetUpMixin(object):
     """Create the setup for TestCases"""
     @classmethod
     def setUpClass(cls):
-        super(SetupMixin, cls).setUpClass()
+        super(SetUpMixin, cls).setUpClass()
         cls.user_data = {
-            'username': 'jee',
+            'username': 'someone',
             'password': 'wordpass'
         }
         User.objects.create_user(**cls.user_data)
         cls.client = APIClient()
 
 
-class UserAuthTestCase(SetupMixin, APITestCase):
+class UserAuthTestCase(SetUpMixin, APITestCase):
     def test_user_can_login(self):
         """Test that the user can be authenticated to access service"""
-        response = self.client.post('/auth/register/', data=self.user_data)
+        response = self.client.post('/auth/', data=self.user_data)
         self.assertContains(response, 'token', status_code=200)

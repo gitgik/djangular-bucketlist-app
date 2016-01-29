@@ -7,15 +7,11 @@ class UserSerializer(serializers.ModelSerializer):
     """Defines the user api representation"""
     class Meta:
         model = User
-        fields = ('id', 'username', 'password')
+        fields = ('username', 'password')
 
     def create(self, validated_data):
         """Creates and returns a new user"""
-        user = User(
-            username=validated_data['username'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
+        user = User.objects.create_user(**validated_data)
         return user
 
 
