@@ -22,7 +22,7 @@ class BaseModel(models.Model):
 
     @classmethod
     def search(cls, query_string):
-        """Searches the model table for words with the query string"""
+        """Searches the model table for words similar to the query string"""
         query_terms = normalize(query_string)
         for word in query_terms:
             query_object = models.Q(**{"name__icontains": word})
