@@ -146,18 +146,25 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        bucketlist_item_data = {'name': 'Make a drone...', 'done': False}
+        bucketlist_item_data = {'name': 'Make a drone', 'done': False}
         res = self.client.post(
             reverse('api.bucketlist.create', kwargs={'pk': 1}),
             bucketlist_item_data, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         # Edit the item done to be True
-        item = {'done': True}
+        item = {'name': 'Make a drone', 'done': True}
         res = self.client.put(
             reverse('api.bucketlist.item', kwargs={'pk': 1, 'pk_item': 1}),
             item,
             format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        # test for data that has been updated
+        res = self.client.get(
+            reverse('api.bucketlist.item',
+                    kwargs={'pk': 1, 'pk_item': 1}), format='json')
+        rv_item = json.loads(res.content)
+        self.assertEqual(rv_item['done'], item['done'])
 
 
 
