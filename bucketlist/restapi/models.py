@@ -1,6 +1,14 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+import re
+
+
+def normalize(query_string):
+    """Return a tuple of words from a query statement"""
+    terms = re.compile(r'"([^"]+)"|(\S+)').findall(query_string)
+    normspace = re.compile(r'\s{2,}').sub
+    return (normspace(' ', (t[0] or t[1]).strip()) for t in terms)
 
 
 class BaseModel(models.Model):
@@ -11,6 +19,14 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
+    @classmethod
+    def search(cls, query_string):
+        """Searches the model table for words with the query string"""
+        query_terms = normalize(query_string)
+        for word in query_terms:
+            query_object = models.Q(**{"name__icontains": word})
+            return cls.objects.filter(query_object).order_by('date_created')
 
 
 class Bucketlist(BaseModel):
