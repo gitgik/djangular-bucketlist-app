@@ -45,7 +45,24 @@ class BucketlistTestCase(SetUpMixin, APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_can_update_bucketlist(self):
-        pass
+        """Tests that the authenticated user can create a Bucketlist"""
+        rv = self.client.post('/auth/', data=self.user_data)
+        self.assertContains(rv, 'token', status_code=200)
+        jwt_token = json.loads(rv.content)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
+        bucketlist_data = {'name': 'After I get to D1...'}
+        response = self.client.post(
+            reverse('api.bucketlists'), bucketlist_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        bucketlist = Bucketlist.objects.get()
+        bucketlist_data = {'name': 'before i die...'}
+        res = self.client.put(
+            reverse('api.bucketlist', kwargs={'pk': bucketlist.id}),
+            bucketlist_data, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_user_can_delete_bucketlist(self):
         """Ensures the use can delete an existing bucketlist"""
@@ -54,7 +71,7 @@ class BucketlistTestCase(SetUpMixin, APITestCase):
         jwt_token = json.loads(rv.content)
         self.client.credentials(
             HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
-        bucketlist_data = {'name': 'Before I get married'}
+        bucketlist_data = {'name': 'Before I get to D1'}
         response = self.client.post(
             reverse('api.bucketlists'),
             bucketlist_data,
