@@ -166,6 +166,62 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         rv_item = json.loads(res.content)
         self.assertEqual(rv_item['done'], item['done'])
 
+    def test_user_can_delete_bucketlist_item(self):
+        """Ensures that user can make a bucketlist item"""
+        rv = self.client.post('/auth/', data=self.user_data)
+        self.assertContains(rv, 'token', status_code=200)
+        jwt_token = json.loads(rv.content)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
+        bucketlist_data = {'name': 'Before I get to D1'}
+        response = self.client.post(
+            reverse('api.bucketlists'),
+            bucketlist_data,
+            format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        bucketlist_item_data = {'name': 'Make a drone...', 'done': False}
+        res = self.client.post(
+            reverse('api.bucketlist.create', kwargs={'pk': 1}),
+            bucketlist_item_data, format='json')
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        # Edit the item done to be True
+        item = {'done': True}
+        res = self.client.delete(
+            reverse('api.bucketlist.item', kwargs={'pk': 1, 'pk_item': 1}),
+            item,
+            format='json')
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class SearchBucketlistTestCase(SetUpMixin, APITestCase):
+    """Test search functionality for bucketlist"""
+
+    def test_user_can_search_bucketlist(self):
+        """Ensures that the user can search for a given bucketlist
+        ENDPOINT: GET /bucketlists?q=:query
+        """
+        rv = self.client.post('/auth/', data=self.user_data)
+        self.assertContains(rv, 'token', status_code=200)
+        jwt_token = json.loads(rv.content)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
+        bucketlist_data = {'name': 'Before I get to D1'}
+        response = self.client.post(
+            reverse('api.bucketlists'),
+            bucketlist_data,
+            format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response = self.client.get(
+            '{0}?q=Before I get'.format(reverse('api.bucketlists')),
+            format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+
 
 
 
