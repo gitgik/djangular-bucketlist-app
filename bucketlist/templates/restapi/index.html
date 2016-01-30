@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="BucketListApp">
+
+<head>
+    <title>BucketList App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+    <base href="/" />
+    <link type="text/css" rel="stylesheet" href="{% static 'libs/angular-material/angular-material.min.css' %}"  media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/angular-toastr.css' %}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/main.css' %}"/>
+</head>
+
+<body>
+    <div ui-view></div>
+
+    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-route/angular-ui-route.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-resource/angular-resource.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/ngStorage/ngStorage.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/moment/min/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-moment/angular-moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-material/angular-material.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-toastr/dist/angular-toastr.tpls.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/services/rest-service.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/controllers/auth-controller.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/controllers/bucketlist-controller.js' %}"></script>
+</body>

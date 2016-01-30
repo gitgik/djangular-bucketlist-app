@@ -16,6 +16,14 @@
     "angular-material": "^1.0.4",
     "angular-animate": "^1.4.9",
     "angular-aria": "^1.4.9",
-    "angular-messages": "^1.4.9"
+    "angular-messages": "^1.4.9",
+    "angular-moment": "^0.10.3",
+    "moment": "^2.11.1",
+    "angular-resource": "^1.4.9",
+    "angular-toastr": "^1.7.0",
+    "ngstorage": "^0.3.10"
+  },
+  "resolutions": {
+    "moment": "^2.11.1"
   }
 }
