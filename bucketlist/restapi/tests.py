@@ -1,10 +1,9 @@
-from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from faker import Faker
-from .models import Bucketlist, BucketlistItem
+from .models import Bucketlist
 import json
 
 
@@ -219,16 +218,3 @@ class SearchBucketlistTestCase(SetUpMixin, APITestCase):
             '{0}?q=Before I get'.format(reverse('api.bucketlists')),
             format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-
-
-
-
-
-
-
-
-
-
-
-
