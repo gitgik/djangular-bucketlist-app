@@ -1,0 +1,21 @@
+{
+  "name": "bucketlist",
+  "version": "0.0.1",
+  "homepage": "https://github.com/andela-ggikera/djangular-bucketlist-app",
+  "authors": [
+    "andela-ggikera <githinji.gikera@andela.com>"
+  ],
+  "description": "Djangular RESTAPI Client",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.4.9",
+    "font-awesome": "^4.5.0",
+    "angular-route": "^1.4.9",
+    "angular-material": "^1.0.4",
+    "angular-animate": "^1.4.9",
+    "angular-aria": "^1.4.9",
+    "angular-messages": "^1.4.9"
+  }
+}
