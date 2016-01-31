@@ -11,7 +11,7 @@ branches:
 # command to run tests
 script:
   - ./manage.py test
-  - coverage run --omit='*virtualenv*' ./manage.py test
+  - coverage run --omit='*virtualenv*' bucketlist/manage.py test
 after_success: coveralls
 env:
   global:
