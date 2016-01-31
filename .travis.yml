@@ -10,7 +10,7 @@ branches:
   - develop
 # command to run tests
 script:
-  - ./bucketlist/manage.py test
+  - ./manage.py test
   - coverage run --omit='*virtualenv*' manage.py test
 after_success: coveralls
 env:
