@@ -86,6 +86,22 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                 $scope.newbucket.name = null;
             })
     }
+
+    $scope.updateBucket = function () {
+        var data = { name: $scope.editbucket.name, id: _id}
+        BucketListService.Bucketlists.updateBucket(data).$promise
+        .then(function (response) {
+
+        })
+    };
+
+     $scope.deleteBucket = function (bucketlist) {
+        bucketlist.$deleteBucket().then(function() {
+            $scope.$emit('updateBucketList');
+            showToast('Bucketlist deleted successfully');
+        });
+     };
+
     // helper functions for toast.
     var showToast = function (message) {
         $mdToast.show(
