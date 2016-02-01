@@ -8,7 +8,15 @@ app.factory('BucketListService', ['$resource', function($resource) {
             }
         }, { stripTrailingSlashes: false }),
 
-        users: $resource('/signup/', {}, {
+        verify: $resource('/auth_verify/', {}, {
+            token: {
+                method: 'POST'
+            }
+        }, {
+            stripTrailingSlashes: false
+        }),
+
+        users: $resource('/auth/signup/', {}, {
             create: {
                 method: 'POST'
             }

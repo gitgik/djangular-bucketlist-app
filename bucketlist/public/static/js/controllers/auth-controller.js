@@ -1,7 +1,16 @@
 'use strict';
-angular.module('bucketlist.controllers', [])
-.controller('AuthController', ['$rootScope', '$scope', '$state', '$localStorage', 'BucketListService',
-    function AuthController($rootScope, $scope, $state, $localStorage, BucketListService) {
+angular.module('bucketlist.controllers', ['ngMaterial'])
+.controller('AuthController', ['$rootScope', '$scope', '$state', '$localStorage', '$mdToast', 'BucketListService',
+    function AuthController($rootScope, $scope, $state, $localStorage, $mdToast, BucketListService) {
+
+        var showToast = function (message) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(message)
+                    .position($scope.getToastPosition())
+                    .hideDelay(2000)
+                );
+        }
         $scope.login = function(){
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.auth.login(data).$promise.then(function(response){
@@ -11,10 +20,10 @@ angular.module('bucketlist.controllers', [])
                 $localStorage.currentUserid = response.id;
 
                 $state.go('dashboard');
-                toastr.success('Welcome ' + $scope.user.username);
+                showToast('Welcome ' + $scope.user.username);
             })
             .catch(function(responseError){
-                toastr.error('Invalid credentials');
+                showToast('Incorrect credentials! Please try again.')
             });
 
         };
@@ -23,9 +32,34 @@ angular.module('bucketlist.controllers', [])
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.users.create(data).$promise.then($scope.login)
             .catch(function(responseError){
-                toastr.error('Could not register user');
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Yikes! Could not register user.')
+                        .position($scope.getToastPosition())
+                        .hideDelay(2000)
+                );
             });
         };
-
+        var last = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+        function sanitizePosition() {
+            var current = $scope.toastPosition;
+            if ( current.bottom && last.top ) current.top = false;
+            if ( current.top && last.bottom ) current.bottom = false;
+            if ( current.right && last.left ) current.left = false;
+            if ( current.left && last.right ) current.right = false;
+            last = angular.extend({},current);
+        }
+        $scope.toastPosition = angular.extend({},last);
+        $scope.getToastPosition = function() {
+            sanitizePosition();
+            return Object.keys($scope.toastPosition)
+              .filter(function(pos) { return $scope.toastPosition[pos]; })
+              .join(' ');
+        };
     }]
 );
