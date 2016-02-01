@@ -61,5 +61,18 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
               .filter(function(pos) { return $scope.toastPosition[pos]; })
               .join(' ');
         };
-    }]
-);
+    }])
+
+.controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', 'BucketListService',
+    function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, BucketListService) {
+
+    $scope.selectedBucket = {};
+    $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
+    $scope.$on('updateBucketList', function() {
+        $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
+    });
+
+    $scope.selectBucketlist = function(bucketlist) {
+        $scope.selectedBucket = bucketlist
+    };
+}]);

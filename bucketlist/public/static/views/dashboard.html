@@ -1,0 +1,43 @@
+<div class="wrapper" layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <div class="md-padding">My bucketlist</div>
+        </div>
+    </md-toolbar>
+    <md-content layout="row" layout-margin layout-padding>
+        </md-input-container>
+            <div flex="30">
+                <md-list class="list">
+                    <md-subheader class="md-no-sticky">Bucketlists</md-subheader>
+                    <md-list-item class="md-2-line" ng-repeat="bucket in bucketlists | filter:search.who" ng-click="selectBucketlist(bucket)">
+                        <div layout="column">
+                            <h3>{{bucket.name}}</h3>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-sidenav>
+        <div flex="70" layout="column" layou-fill layout-margin layout-padding>
+            <md-subheader class="md-no-sticky">
+            Details
+            </md-subheader>
+            <div layout="row">
+                <md-input-container flex="80">
+                    <label>What do you want to do?</label>
+                    <input type="text" ng-model="selectedBucketlist.name">
+                </md-input-container>
+                <md-button flex="20" class="md-raised md-primary" ng-click="createBucketlist()" flex ng-disabled="users.newUser">Create</md-button>
+            </div>
+            <div layout="row">
+                <md-card>
+                    <md-card-content>
+                        <h4 ng-model="selectedBucket.name">{{selectedBucket.name}}</h4>
+                        <time id="timedisplay">
+                            <i class="material-icons">query_builder</i> {{selectedBucket.date_created  | amCalendar}}
+                        </time>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </md-content>
+</div>

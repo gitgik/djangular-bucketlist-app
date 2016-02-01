@@ -1,4 +1,3 @@
-
 'use strict';
 
 var app = angular.module('bucketlist',
@@ -8,7 +7,7 @@ var app = angular.module('bucketlist',
         'angularMoment',
         'ngResource',
         'ngStorage',
-        'bucketlist.controllers'
+        'bucketlist.controllers',
     ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
