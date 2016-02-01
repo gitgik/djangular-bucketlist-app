@@ -1,6 +1,6 @@
 'use strict';
-angular.module('bucketlist', [])
-.controller('AuthController',
+angular.module('bucketlist.controllers', [])
+.controller('AuthController', ['$rootScope', '$scope', '$state', '$localStorage', 'BucketListService',
     function AuthController($rootScope, $scope, $state, $localStorage, BucketListService) {
 
         var BlService = BucketListService;
@@ -35,5 +35,5 @@ angular.module('bucketlist', [])
 
         };
 
-    }
+    }]
 );
