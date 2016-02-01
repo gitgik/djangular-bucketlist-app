@@ -8,6 +8,7 @@ var app = angular.module('bucketlist',
         'angularMoment',
         'ngResource',
         'ngStorage',
+        'bucketlist.controllers'
     ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',

@@ -1,20 +1,20 @@
 'use strict';
 
-app.factory('BucketlistService', ['$resource', function($resource) {
+app.factory('BucketListService', ['$resource', function($resource) {
     return {
-        auth: $resource('/api/auth/', {}, {
+        auth: $resource('/auth/', {}, {
             login: {
                 method: 'POST'
             }
         }, { stripTrailingSlashes: false }),
 
-        users: $resource('api/signup/', {}, {
+        users: $resource('/signup/', {}, {
             create: {
                 method: 'POST'
             }
         }, { stripTrailingSlashes: false }),
 
-        Bucketlists: $resource('/api/bucketlists/:id/', {id: "@id"},
+        Bucketlists: $resource('/bucketlists/:id/', {id: "@id"},
         {
             createBucket: { method: 'POST'},
             getAllBuckets: { method: 'GET', isArray: true},
@@ -24,7 +24,7 @@ app.factory('BucketlistService', ['$resource', function($resource) {
         },
         { stripTrailingSlashes: false }),
 
-        BucketlistItems: $resource('api/bucketlists/:bid/items/:id/', {bid:"@bid", id: "@id"},
+        BucketlistItems: $resource('/bucketlists/:bid/items/:id/', {bid:"@bid", id: "@id"},
         {
             createBucketItem: {
                 method: 'POST'
@@ -42,9 +42,9 @@ app.factory('BucketlistService', ['$resource', function($resource) {
         },
         { stripTrailingSlashes: false })
     };
-}])
+}]);
 
-.factory('httpRequestInterceptor', function($localStorage) {
+app.factory('httpRequestInterceptor', function($localStorage) {
     return {
         request: function(config) {
             var token = $localStorage.token;
