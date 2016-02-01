@@ -41,12 +41,10 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             });
         };
         var last = {
-            bottom: false,
-            top: true,
-            left: false,
-            right: true
+            bottom: false, top: true,
+            left: false, right: true
         };
-        function sanitizePosition() {
+        var sanitizePosition = function () {
             var current = $scope.toastPosition;
             if ( current.bottom && last.top ) current.top = false;
             if ( current.top && last.bottom ) current.bottom = false;
@@ -72,7 +70,48 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
     });
 
-    $scope.selectBucketlist = function(bucketlist) {
+    $scope.selectBucketlist = function (bucketlist) {
         $scope.selectedBucket = bucketlist
+    };
+
+    // create a bucketlist using the provided name
+    $scope.createBucketlist = function () {
+        var data = { name: $scope.newbucket.name };
+        BucketListService.Bucketlists.createBucket(data).$promise.then(
+            function(response) {
+                // emit the trigger to a fresh UI update
+                $scope.$emit('updateBucketList');
+                showToast('Yeiy! Bucketlist created successfully!')
+                // nullify the new bucketlist object
+                $scope.newbucket.name = null;
+            })
+    }
+    // helper functions for toast.
+    var showToast = function (message) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .position($scope.getToastPosition())
+                .hideDelay(2000)
+            );
+    };
+    var last = {
+        bottom: false, top: true,
+        left: false, right: true
+    };
+    var sanitizePosition = function () {
+        var current = $scope.toastPosition;
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+        last = angular.extend({},current);
+    }
+    $scope.toastPosition = angular.extend({},last);
+    $scope.getToastPosition = function () {
+        sanitizePosition();
+        return Object.keys($scope.toastPosition)
+          .filter(function(pos) { return $scope.toastPosition[pos]; })
+          .join(' ');
     };
 }]);
