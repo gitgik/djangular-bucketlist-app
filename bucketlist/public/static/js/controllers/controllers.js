@@ -11,7 +11,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                     .hideDelay(2000)
                 );
         }
-        $scope.login = function(){
+        $scope.login = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.auth.login(data).$promise.then(function(response){
                 $localStorage.token = response.token;
@@ -61,8 +61,8 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         };
     }])
 
-.controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', 'BucketListService',
-    function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, BucketListService) {
+.controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService',
+    function BucketListController($timeout, $rootScope, $scope, $state, $localStorage, $stateParams, $mdSidenav, $mdToast, BucketListService) {
 
     $scope.selectedBucket = {};
     $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
@@ -95,14 +95,45 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         })
     };
 
-     $scope.deleteBucket = function (bucketlist) {
+    $scope.deleteBucket = function (bucketlist) {
         bucketlist.$deleteBucket().then(function() {
             $scope.$emit('updateBucketList');
             showToast('Bucketlist deleted successfully');
         });
-     };
+    };
 
     // helper functions for toast.
+    $scope.toggleLeft = buildDelayedToggler('left');
+    /**
+     * Supplies a function that will continue to operate until the
+     * time is up.
+     */
+    function debounce(func, wait, context) {
+      var timer;
+      return function debounced() {
+        var context = $scope,
+            args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildDelayedToggler(navID) {
+      return debounce(function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }, 200);
+    }
+
     var showToast = function (message) {
         $mdToast.show(
             $mdToast.simple()
