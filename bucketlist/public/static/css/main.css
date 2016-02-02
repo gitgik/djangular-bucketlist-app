@@ -1,13 +1,13 @@
-#topcontainer {
+#topscontainer {
     width: 100%;
     height: 100%;
     display:  block;
     position: relative;
 }
 
-#topcontainer::after {
+#topscontainer::after {
     content: "";
-    background: url(images/bucket-list.jpg);
+    background-image: url(images/bucket-list.jpg);
     opacity: 0.5;
     top: 0;
     left: 0;
@@ -15,4 +15,8 @@
     right: 0;
     position: absolute;
     z-index: -1;
+}
+
+.instance {
+    border: 1px solid #efefef;
 }

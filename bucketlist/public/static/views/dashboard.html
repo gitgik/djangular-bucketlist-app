@@ -18,7 +18,7 @@
                </md-input-container>
              </md-subheader>
              <md-list>
-                <md-list-item class="md-2-line" ng-repeat="bucket in bucketlists | filter:search.who" ng-click="selectBucketlist(bucket)">
+                <md-list-item class="md-2-line" ng-repeat="bucket in bucketlists | filter:search.who" ng-click="close(); selectBucketlist(bucket);">
                     <div layout="column">
                         <h3>{{ bucket.name }}</h3>
                     </div>
@@ -56,7 +56,7 @@
                                 <md-tooltip>Edit Bucket</md-tooltip>
                                 <i class="material-icons">edit</i>
                             </md-button>
-                            <md-button ng-click="deleteBucket(selectedBucket)">
+                            <md-button ng-click="showConfirm($event, selectedBucket)">
                                 <md-tooltip>Delete BucketList</md-tooltip>
                                 <i class="material-icons">delete</i>
                             </md-button>

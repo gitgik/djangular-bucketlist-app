@@ -61,8 +61,8 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         };
     }])
 
-.controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService',
-    function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, $mdSidenav, $timeout, BucketListService) {
+.controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService', '$mdDialog',
+    function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, $mdSidenav, $timeout, BucketListService, $mdDialog) {
 
     $scope.selectedBucket = {};
     $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
@@ -95,15 +95,12 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         })
     };
 
-    $scope.deleteBucket = function (bucketlist) {
-        bucketlist.$deleteBucket().then(function() {
-            $scope.$emit('updateBucketList');
-            showToast('Bucketlist deleted successfully');
-        });
-    };
-
     // helper functions for toast.
     $scope.toggleLeft = buildDelayedToggler('left');
+    $scope.close = function () {
+      $mdSidenav('left').close()
+        .then(function () {});
+    };
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
@@ -128,9 +125,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
       return debounce(function() {
         $mdSidenav(navID)
           .toggle()
-          .then(function () {
-            $log.debug("toggle " + navID + " is done");
-          });
+          .then(function () {});
       }, 200);
     }
 
@@ -142,6 +137,25 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                 .hideDelay(2000)
             );
     };
+
+    $scope.showConfirm = function(ev, bucketlist) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+              .title('Would you like to delete this bucketlist?')
+              .textContent('Once you delete it, its gone forever.')
+              .ariaLabel('Lucky day')
+              .targetEvent(ev)
+              .ok('DELETE')
+              .cancel('CANCEL');
+        $mdDialog.show(confirm).then(function() {
+            bucketlist.$deleteBucket().then(function() {
+                $scope.selectedBucket.name == undefined;
+                $scope.$emit('updateBucketList');
+                showToast('Bucketlist deleted successfully')
+            });
+        }, function() {});
+    };
+
     var last = {
         bottom: false, top: true,
         left: false, right: true
