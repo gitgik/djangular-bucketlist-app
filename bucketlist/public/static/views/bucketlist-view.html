@@ -1,0 +1,35 @@
+<div class="wrapper" layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button ng-click="toggleLeft()" hide-gt-sm>
+                <i class="material-icons iconize">menu</i>
+            </md-button>
+            <div flex class="md-padding">
+                <a ui-sref="dashboard">My bucketlist</a></div>
+            <a flex="10" ui-sref="logout">Logout</a>
+        </div>
+    </md-toolbar>
+    <md-content layout="row" layout-align="center center" layout-margin layout-padding flex>
+        <md-card layout="column" layout-align="center center">
+            <md-card-title layout-margin>
+                <md-card-title-text>{{ bucketlist.name }}</md-card-title-text>
+            </md-card-title>
+            <md-whiteframe class="md-whiteframe signup-container" layout="column">
+                <md-input-container layout="row">
+                    <label>Create a new item in your bucket</label>
+                    <input type="text" ng-model="newitem.name" onfocus />
+                </md-input-container>
+                <md-input-container layout="row" layout-align="center center">
+                    <md-list>
+                        <md-list-item class="md-2-line" ng-repeat="item in bucketlist.items">
+                            <md-checkbox ng-model="item.done"></md-checkbox>
+                            <div class="md-list-item-text">
+                              <h3>{{item.name}}</h3>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-input-container>
+            </md-whiteframe>
+        </md-card>
+    </md-content>
+</div>

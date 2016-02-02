@@ -143,11 +143,11 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
     $scope.showConfirm = function(ev, bucketlist) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
-              .title('Would you like to delete this bucketlist?')
-              .textContent('Once you delete it, its gone forever.')
+              .title('DELETE BUCKETLIST')
+              .textContent('Are you sure you want to delete this bucketlist? This cannot be undone.')
               .ariaLabel('Lucky day')
               .targetEvent(ev)
-              .ok('DELETE')
+              .ok('YES, DELETE IT')
               .cancel('CANCEL');
         $mdDialog.show(confirm).then(function() {
             bucketlist.$deleteBucket().then(function() {
@@ -177,4 +177,22 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
           .filter(function(pos) { return $scope.toastPosition[pos]; })
           .join(' ');
     };
-}]);
+}])
+
+.controller('BucketListViewController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService', '$mdDialog',
+    function BucketListViewController ($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, $mdSidenav, $timeout, BucketListService, $mdDialog) {
+
+        $scope.$on('updateBucketlist', function () {
+            $scope.bucketlist= BucketListService.Bucketlists.getOneBucket({
+                id: $stateParams.id
+            });
+        });
+
+        $scope.username = $localStorage.currentUser;
+        $scope.bucketlist = BucketListService.Bucketlists.getOneBucket({
+            id: $stateParams.id
+        });
+
+    }])
+
+
