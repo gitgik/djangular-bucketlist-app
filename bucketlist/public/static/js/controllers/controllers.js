@@ -62,7 +62,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
     }])
 
 .controller('BucketListController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService',
-    function BucketListController($timeout, $rootScope, $scope, $state, $localStorage, $stateParams, $mdSidenav, $mdToast, BucketListService) {
+    function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, $mdSidenav, $timeout, BucketListService) {
 
     $scope.selectedBucket = {};
     $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
