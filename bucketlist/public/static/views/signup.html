@@ -1,25 +1,31 @@
-<div layout="column" role="main" id="topscontainer">
-    <md-content flex id="content">
-        <div layout="row" layout-align="center center" layout-fill>
-            <md-whiteframe class="md-whiteframe-7dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout-padding>
-                <md-content class="instance">
-                    <md-input-container>
+
+    <div class="blist-image">
+        <div layout="column" layout-align="center center" class="content">
+            <h3 class="description" layout="row" layout-align="center center">
+                    Creating bucketlists has never been this easy!
+                    Start your journey now.
+            </h3>
+            <md-card layout="column" layout-align="center center">
+                <md-card-title layout-margin>
+                    <md-card-title-text>Sign up</md-card-title-text>
+                </md-card-title>
+                <md-whiteframe class="md-whiteframe-7dp signup-container" layout="column">
+                    <md-input-container layout="row">
                         <label>Username</label>
-                        <input ng-model="user.username">
+                        <input type="text" ng-model="user.username" onfocus />
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container layout="row">
                         <label>Password</label>
-                        <input ng-model="user.password" type="password">
+                        <input ng-model="user.password" type="password"/>
                     </md-input-container>
-                    <md-input-container layout-align="center center">
+                    <md-input-container layout="row" layout-align="center center">
                         <div layout="row" layout-sm="column" layout-margin>
-                            <md-button class="md-raised" flex="50" flex-sm="100" ng-click="login()">Login</md-button>
+                            <md-button class="md-raised" flex="50" flex-sm="100" ng-click="login()" ng-disabled="!user">Login</md-button>
                             <md-button class="md-raised md-primary" flex="50" flex-sm="100" ng-click="register()">Register</md-button>
                         </div>
                     </md-input-container>
-                </md-content>
-            </md-whiteframe>
+                </md-whiteframe>
+            </md-card>
         </div>
-    </md-content>
-</div>
+    </div>
 

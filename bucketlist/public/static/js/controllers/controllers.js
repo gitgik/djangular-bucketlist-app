@@ -84,6 +84,8 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                 showToast('Yeiy! Bucketlist created successfully!')
                 // nullify the new bucketlist object
                 $scope.newbucket.name = null;
+            }, function() {
+                showToast('Oops! There is a bucket with the same name.')
             })
     }
 
@@ -149,7 +151,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
               .cancel('CANCEL');
         $mdDialog.show(confirm).then(function() {
             bucketlist.$deleteBucket().then(function() {
-                $scope.selectedBucket.name == undefined;
+                delete $scope.selectedBucket;
                 $scope.$emit('updateBucketList');
                 showToast('Bucketlist deleted successfully')
             });
