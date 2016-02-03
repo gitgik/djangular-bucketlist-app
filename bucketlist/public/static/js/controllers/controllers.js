@@ -89,11 +89,17 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
     };
 }])
 
-.controller('BucketListViewController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', '$mdToast', '$mdSidenav', '$timeout', 'BucketListService', '$mdDialog',
-    function BucketListViewController ($rootScope, $scope, $state, $localStorage, $stateParams, $mdToast, $mdSidenav, $timeout, BucketListService, $mdDialog) {
+.controller('BucketListViewController', ['$rootScope', '$scope', '$state', '$localStorage', '$stateParams', 'Toast', 'Menu', 'BucketListService', '$mdSidenav', '$mdDialog',
+    function BucketListViewController ($rootScope, $scope, $state, $localStorage, $stateParams, Toast, Menu, BucketListService, $mdSidenav, $mdDialog) {
+
+        $scope.selectedBucket = {};
+        $scope.newitem = {};
+        $scope.selectBucketlist = function (bucketlist) {
+            $state.go('viewBucket', {id: bucketlist.id});
+        };
 
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
-        $scope.$on('updateBucketlist', function () {
+        $scope.$on('updateBucketlistItem', function () {
             $scope.bucketlist= BucketListService.Bucketlists.getOneBucket({
                 id: $stateParams.id
             });
@@ -105,52 +111,46 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         });
 
         $scope.createBucketItem = function (params) {
-            BucketListService.BucketlistItems.createBucketItem.$promise.then(
+            var data = angular.extend({}, params);
+            data.name = $scope.newitem.name;
+            BucketListService.BucketlistItems.createBucketItem(data)
+            .$promise.then(
                 function(response) {
                     $scope.newitem.name = null
-                    $scope.$emit('updateBucketlist');
-                    ('Item created successfully');
-                }, function() {
+                    $scope.$emit('updateBucketlistItem');
+                    Toast.show('Item created successfully');
+                }, function(error) {
                     //creating an item failed
-
+                    Toast.show('Unable to create item. Please try again')
                 })
         };
 
-        /*
-        Helper functions for menu toggling.
-        */
-        $scope.toggleLeft = buildDelayedToggler('left');
-        $scope.close = function () {
-          $mdSidenav('left').close()
-            .then(function () {});
+        $scope.deleteBucketItem = function(ev, bucketlist) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirm = $mdDialog.confirm()
+                  .title('DELETE BUCKETLIST')
+                  .textContent('Are you sure you want to delete this bucketlist item? This cannot be undone.')
+                  .ariaLabel('Lucky day')
+                  .targetEvent(ev)
+                  .ok('YES, DELETE ITEM')
+                  .cancel('CANCEL');
+            $mdDialog.show(confirm).then(function() {
+                BucketListService.BucketlistItems.deleteBucketItem(bucketlist)
+                .$promise.then(function (response) {
+                    $scope.emit('updateBucketList');
+                    Toast.show('Bucketlist Item Deleted successfully.');
+                }, function () {
+                    // Failed to delete
+                    Toast.show('Could not delete item. Please try again.');
+                });
+            }, function() {});
         };
-        /**
-         * Supplies a function that will continue to operate until the
-         * time is up.
-         */
-        function debounce(func, wait, context) {
-          var timer;
-          return function debounced() {
-            var context = $scope,
-                args = Array.prototype.slice.call(arguments);
-            $timeout.cancel(timer);
-            timer = $timeout(function() {
-              timer = undefined;
-              func.apply(context, args);
-            }, wait || 10);
-          };
-        }
-        /**
-         * Build handler to open/close a SideNav; when animation finishes
-         * report completion in console
-         */
-        function buildDelayedToggler(navID) {
-          return debounce(function() {
-            $mdSidenav(navID)
-              .toggle()
-              .then(function () {});
-          }, 200);
-        }
+
+        $scope.toggleLeft = Menu.toggle('left');
+        $scope.close = function () {
+        $mdSidenav('left').close()
+            .then(function () {});
+    }
     }])
 
 

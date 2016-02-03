@@ -34,19 +34,10 @@ app.factory('BucketListService', ['$resource', function($resource) {
 
         BucketlistItems: $resource('/bucketlists/:bid/items/:id/', {bid:"@bid", id: "@id"},
         {
-            createBucketItem: {
-                method: 'POST'
-            },
-            getOneBucketItem: {
-                method: 'GET',
-                isArray: false
-            },
-            updateBucketItem: {
-                method: 'PUT'
-            },
-            deleteBucketItem: {
-                method: 'DELETE'
-            }
+            createBucketItem: { method: 'POST'},
+            getOneBucketItem: { method: 'GET', isArray: false },
+            updateBucketItem: { method: 'PUT' },
+            deleteBucketItem: { method: 'DELETE'}
         },
         { stripTrailingSlashes: false })
     };
