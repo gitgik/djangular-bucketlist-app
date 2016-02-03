@@ -9,27 +9,49 @@
             <a flex="10" ui-sref="logout">Logout</a>
         </div>
     </md-toolbar>
-    <md-content layout="row" layout-align="center center" layout-margin layout-padding flex>
-        <md-card layout="column" layout-align="center center">
-            <md-card-title layout-margin>
-                <md-card-title-text>{{ bucketlist.name }}</md-card-title-text>
-            </md-card-title>
-            <md-whiteframe class="md-whiteframe signup-container" layout="column">
-                <md-input-container layout="row">
-                    <label>Create a new item in your bucket</label>
-                    <input type="text" ng-model="newitem.name" onfocus />
-                </md-input-container>
-                <md-input-container layout="row" layout-align="center center">
-                    <md-list>
-                        <md-list-item class="md-2-line" ng-repeat="item in bucketlist.items">
-                            <md-checkbox ng-model="item.done"></md-checkbox>
-                            <div class="md-list-item-text">
-                              <h3>{{item.name}}</h3>
-                            </div>
-                        </md-list-item>
-                    </md-list>
-                </md-input-container>
-            </md-whiteframe>
-        </md-card>
-    </md-content>
+    <div layout="row" flex>
+        <md-sidenav md-component-id="left" layout="column" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2">
+             <md-subheader class="md-no-sticky">
+               <md-input-container flex="100">
+                 <input ng-model="search.who" placeholder="Search bucketlist">
+               </md-input-container>
+             </md-subheader>
+             <md-list>
+                <md-list-item class="md-1-line" ng-repeat="bucket in bucketlists | filter:search.who" ng-click="close(); selectBucketlist(bucket);">
+                    <div layout="column">
+                        <h3>{{ bucket.name }}</h3>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-sidenav>
+        <md-content layout="column" layout-margin layout-padding flex>
+            <md-card layout="column" layout-align="center center">
+                <md-card-title layout-margin>
+                    <md-card-title-text>{{ bucketlist.name }}</md-card-title-text>
+                </md-card-title>
+                <md-whiteframe class="md-whiteframe container" layout="row">
+                    <md-input-container layout="column" flex="80">
+                        <label>Enter an item...</label>
+                        <input type="text" ng-model="newitem.name" onfocus />
+                    </md-input-container>
+                    <md-button flex="20" layout="column" class="md-raised md-primary" ng-click="createBucketItem()" flex ng-disabled="!newitem.name">
+                        <i class="material-icons iconize">add</i>
+                        <md-tooltip>Create your bucket</md-tooltip>
+                    </md-button>
+                </md-whiteframe>
+                <md-whiteframe layout="row" class="md-whiteframe container">
+                    <md-input-container layout="column" layout-align="center center">
+                        <md-list>
+                            <md-list-item class="md-2-line" ng-repeat="item in bucketlist.items">
+                                <md-checkbox ng-model="item.done"></md-checkbox>
+                                <div class="md-list-item-text">
+                                  <h3>{{item.name}}</h3>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </md-input-container>
+                </md-whiteframe>
+            </md-card>
+        </md-content>
+    </div>
 </div>

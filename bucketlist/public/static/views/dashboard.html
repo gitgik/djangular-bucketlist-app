@@ -10,13 +10,13 @@
         </div>
     </md-toolbar>
     <div layout="row" flex>
-        <md-sidenav md-component-id="left" layout="column" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2">
-             <md-subheader class="md-no-sticky">
-               <md-input-container flex="100">
-                 <input ng-model="search.who" placeholder="Search bucketlist">
+        <md-sidenav md-component-id="left" layout="column" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z1">
+            <md-subheader class="md-no-sticky">
+               <md-input-container>
+                 <input ng-model="search.who" placeholder="Search bucketlist" flex>
                </md-input-container>
-             </md-subheader>
-             <md-list>
+            </md-subheader>
+            <md-list>
                 <md-list-item class="md-1-line" ng-repeat="bucket in bucketlists | filter:search.who" ng-click="close(); selectBucketlist(bucket);">
                     <div layout="column">
                         <h3>{{ bucket.name }}</h3>
