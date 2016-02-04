@@ -4,9 +4,8 @@
 }
 .description {
     color: #fff;
-    font-size: 55px;
-    text-shadow: 4px 4px 4px #aaa;
-    font-family: 'Tangerine', serif;
+    font-size: 2.5em;
+    font-family: 'Roboto Condensed', verdana;
     text-align: center
 }
 .blist-image {
@@ -23,10 +22,14 @@
     top: 0; right: 0; left: 0; bottom: 0;
     position: absolute;
     z-index: 1;
-    opacity: 0.6;
+    opacity: 0.95;
 }
 .container {
     min-width: 20em;
+}
+.main-container {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
 }
 .signup-container {
     min-width: 20em;

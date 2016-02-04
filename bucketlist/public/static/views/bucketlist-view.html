@@ -27,9 +27,9 @@
         <md-content layout="column" layout-margin layout-padding flex>
             <md-card layout="column" layout-align="center center">
                 <md-card-title layout-margin>
-                    <md-card-title-text>{{ bucketlist.name }}</md-card-title-text>
+                    <md-card-title-text>{{ bucket.name }}</md-card-title-text>
                 </md-card-title>
-                <form layout="row" ng-submit="createBucketItem({bid: bucketlist.id, bucketlist: bucketlist.id })">
+                <form layout="row" ng-submit="createBucketItem({bid: bucket.id, bucketlist: bucket.id })">
                     <md-whiteframe class="md-whiteframe container" layout="column">
                         <div layout="row">
                            <md-input-container layout="column" flex="80">
@@ -46,12 +46,12 @@
                 <md-whiteframe layout="row" class="md-whiteframe container">
                     <md-input-container layout="column" layout-align="center center">
                         <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="item in bucketlist.items">
+                            <md-list-item class="md-2-line" ng-repeat="item in bucket.items | orderBy:'done'">
                                 <md-checkbox ng-model="item.done"></md-checkbox>
                                 <div class="md-list-item-text">
                                   <h3>{{item.name}}</h3>
                                 </div>
-                                <md-button flex="10" class="md-raised" ng-click="deleteBucketItem($event, {bid :bucketlist.id, id:item.id})">
+                                <md-button flex="10" class="md-raised" ng-click="deleteBucketItem($event, { bid: bucket.id, id: item.id})">
                                     <i class="material-icons iconize">delete</i>
                                     <md-tooltip>Delete item</md-tooltip>
                             </md-button>

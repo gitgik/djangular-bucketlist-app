@@ -54,6 +54,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             function(response) {
                 // emit the trigger to a fresh UI update
                 $scope.$emit('updateBucketList');
+                console.log(JSON.stringify(response));
                 Toast.show('Yeiy! Bucketlist created successfully!')
                 // nullify the new bucketlist object
                 $scope.newbucket.name = null;
@@ -95,33 +96,44 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.selectedBucket = {};
         $scope.newitem = {};
         $scope.selectBucketlist = function (bucketlist) {
+            console.log(bucketlist);
             $state.go('viewBucket', {id: bucketlist.id});
         };
 
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
-        $scope.$on('updateBucketlistItem', function () {
-            $scope.bucketlist= BucketListService.Bucketlists.getOneBucket({
+        $scope.$on('updateBucketlistItems', function () {
+            console.log("HERE IS THE STATE PARAM " + $stateParams.id);
+            $scope.bucket = BucketListService.Bucketlists.getOneBucket({
                 id: $stateParams.id
             });
         });
 
-        $scope.username = $localStorage.currentUser;
-        $scope.bucketlist = BucketListService.Bucketlists.getOneBucket({
+        $scope.bucket = BucketListService.Bucketlists.getOneBucket({
             id: $stateParams.id
         });
+        console.log(JSON.stringify($scope.bucket));
 
         $scope.createBucketItem = function (params) {
             var data = angular.extend({}, params);
             data.name = $scope.newitem.name;
             BucketListService.BucketlistItems.createBucketItem(data)
-            .$promise.then(
-                function(response) {
+            .$promise.then(function(response) {
+                    console.log(JSON.stringify(response));
                     $scope.newitem.name = null
-                    $scope.$emit('updateBucketlistItem');
+                    $scope.$emit('updateBucketlistItems');
                     Toast.show('Item created successfully');
                 }, function(error) {
                     //creating an item failed
-                    Toast.show('Unable to create item. Please try again')
+                    console.log(JSON.stringify(error));
+                    if (error.status == 400) {
+                        Toast.show('An item with the same name already exists');
+                    }
+                    else if (error.status == -1) {
+                        Toast.show('You are disconnected from the server. Please ensure you have an internet connection.')
+                    }
+                    else {
+                        Toast.show('Unable to create item. Please try again')
+                    }
                 })
         };
 
@@ -137,10 +149,11 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             $mdDialog.show(confirm).then(function() {
                 BucketListService.BucketlistItems.deleteBucketItem(bucketlist)
                 .$promise.then(function (response) {
-                    $scope.emit('updateBucketList');
+                    $scope.$emit('updateBucketlistItems');
                     Toast.show('Bucketlist Item Deleted successfully.');
-                }, function () {
-                    // Failed to delete
+                }, function (response_error) {
+                    // Failed to delete item
+                    console.log(JSON.stringify(response_error));
                     Toast.show('Could not delete item. Please try again.');
                 });
             }, function() {});

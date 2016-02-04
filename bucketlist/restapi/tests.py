@@ -123,10 +123,12 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
             format='json'
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        bucketlist_item_data = {'name': 'Make a drone...'}
+        pk = Bucketlist.objects.latest('date_created').pk
+        bucketlist_item_data = {"name": "Make a drone", "done": False}
+        import pdb;
+        pdb.set_trace()
         res = self.client.post(
-            reverse('api.bucketlist.create', kwargs={'pk': 1}),
+            reverse('api.bucketlist.create', kwargs={'pk': pk}),
             bucketlist_item_data, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
@@ -153,7 +155,7 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         # Edit the item done to be True
         item = {'name': 'Make a drone', 'done': True}
         res = self.client.put(
-            reverse('api.bucketlist.item', kwargs={'pk': 1, 'pk_item': 1}),
+            reverse('api.bucketlist.item', kwargs={'pk': 1, 'id': 1}),
             item,
             format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -161,7 +163,7 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         # test for data that has been updated
         res = self.client.get(
             reverse('api.bucketlist.item',
-                    kwargs={'pk': 1, 'pk_item': 1}), format='json')
+                    kwargs={'pk': 1, 'id': 1}), format='json')
         rv_item = json.loads(res.content)
         self.assertEqual(rv_item['done'], item['done'])
 
@@ -173,25 +175,48 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
         bucketlist_data = {'name': 'Before I get to D1'}
+        bucketlist_data1 = {'name': 'Another one!'}
+
         response = self.client.post(
             reverse('api.bucketlists'),
             bucketlist_data,
             format='json'
         )
+        # create another one(bucketlist)
+        response = self.client.post(
+            reverse('api.bucketlists'),
+            bucketlist_data1,
+            format='json'
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         bucketlist_item_data = {'name': 'Make a drone...', 'done': False}
+        bucketlist_item_data1 = {'name': 'Try this shit out...', 'done': False}
+        bucketlist_item_data2 = {'name': 'This be cwazy...', 'done': False}
+
         res = self.client.post(
             reverse('api.bucketlist.create', kwargs={'pk': 1}),
             bucketlist_item_data, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        # Edit the item done to be True
-        item = {'done': True}
-        res = self.client.delete(
-            reverse('api.bucketlist.item', kwargs={'pk': 1, 'pk_item': 1}),
-            item,
+
+        res = self.client.post(
+            reverse('api.bucketlist.create', kwargs={'pk': 1}),
+            bucketlist_item_data1, format='json')
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        # test deletion of item in another one(bucketlist)
+        res = self.client.post(
+            reverse('api.bucketlist.create', kwargs={'pk': 1}),
+            bucketlist_item_data2, format='json')
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        res0 = self.client.delete(
+            reverse('api.bucketlist.item', kwargs={'pk': 1, 'id': 1}),
             format='json')
-        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        res1 = self.client.delete(
+            reverse('api.bucketlist.item', kwargs={'pk': 2, 'id': 1}),
+            format='json')
+        self.assertEqual(res0.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(res1.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class SearchBucketlistTestCase(SetUpMixin, APITestCase):

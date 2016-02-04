@@ -21,13 +21,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
             module: 'public'
         })
 
-        .state('login', {
-            url: '/login',
-            controller: 'AuthController',
-            templateUrl: '/static/views/login.html',
-            module: 'public'
-        })
-
         .state('logout', {
             url: '/logout',
             controller: function($rootScope, $state, $localStorage) {
@@ -41,7 +34,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
 
         //States for bucketlist
         .state('viewBucket', {
-            url: '/bucketlist/:id/items',
+            url: '/bucketlists/:id/items',
             controller: 'BucketListViewController',
             templateUrl: '/static/views/bucketlist-view.html',
             module: 'private'
