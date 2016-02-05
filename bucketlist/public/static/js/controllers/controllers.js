@@ -2,6 +2,17 @@
 angular.module('bucketlist.controllers', ['ngMaterial'])
 .controller('AuthController', ['$rootScope', '$scope', '$state', '$localStorage', 'Toast', 'BucketListService',
     function AuthController($rootScope, $scope, $state, $localStorage, Toast, BucketListService) {
+        $scope.user = {};
+        $scope.user.signup = true;
+
+        $scope.navLogin = function () {
+            $scope.user.login = true;
+            $scope.user.signup = false;
+        }
+        $scope.navSignup = function () {
+            $scope.user.login = false;
+            $scope.user.signup = true;
+        }
 
         $scope.login = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
@@ -33,6 +44,8 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
     function BucketListController($rootScope, $scope, $state, $localStorage, $stateParams, Toast, $mdSidenav, $timeout, BucketListService, $mdDialog, Menu) {
 
     $scope.selectedBucket = {};
+    $scope.editbucket = {};
+
     $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
     $scope.$on('updateBucketList', function() {
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
@@ -40,6 +53,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
 
     $scope.selectBucketlist = function (bucketlist) {
         $scope.selectedBucket = bucketlist
+        $scope.editbucket.enabled = false;
     };
 
     $scope.toggleLeft = Menu.toggle('left');
@@ -63,7 +77,6 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             })
         }
 
-    $scope.editbucket = {};
     $scope.toggleUpdate = function () {
         if (!$scope.editbucket.enabled) {
             $scope.editbucket.enabled = true;
@@ -113,7 +126,6 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.selectedBucket = {};
         $scope.newitem = {};
         $scope.selectBucketlist = function (bucketlist) {
-            console.log(bucketlist);
             $state.go('viewBucket', {id: bucketlist.id});
         };
 
@@ -152,6 +164,17 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                         Toast.show('Unable to create item. Please try again')
                     }
                 })
+        };
+
+        $scope.toggleDone = function (item, itemId, bucketlistId) {
+            var data = {
+                done: item.done, name: item.name,
+                id: itemId, bucketlist: bucketlistId, bid: bucketlistId
+            };
+            BucketListService.BucketlistItems.updateBucketItem(data)
+            .$promise.then(function(response) {
+                Toast.show("Your item has been updated.");
+            })
         };
 
         $scope.deleteBucketItem = function(ev, bucketlist) {

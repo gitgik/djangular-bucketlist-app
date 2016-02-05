@@ -30,6 +30,10 @@
 .container {
     min-width: 20em;
 }
+.labels {
+    color: #01579b;
+    cursor: pointer;
+}
 .main-container {
     opacity: 0.8;
     filter: alpha(opacity=80);

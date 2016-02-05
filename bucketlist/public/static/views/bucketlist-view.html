@@ -47,7 +47,8 @@
                     <md-input-container layout="column" layout-align="center center">
                         <md-list>
                             <md-list-item class="md-2-line" ng-repeat="item in bucket.items | orderBy:'done'">
-                                <md-checkbox ng-model="item.done"></md-checkbox>
+                                <md-checkbox ng-model="item.done" ng-change="toggleDone(item, item.id, bucket.id)">
+                                </md-checkbox>
                                 <div class="md-list-item-text">
                                   <h3>{{item.name}}</h3>
                                 </div>
