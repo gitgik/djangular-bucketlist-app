@@ -1,0 +1,65 @@
+<div class="wrapper" layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button ng-click="toggleLeft()" hide-gt-sm>
+                <i class="material-icons iconize">menu</i>
+            </md-button>
+            <div flex class="md-padding">
+                <a ui-sref="dashboard">My bucketlist</a></div>
+            <a flex="10" ui-sref="logout">Logout</a>
+        </div>
+    </md-toolbar>
+    <div layout="row" flex>
+        <md-sidenav md-component-id="left" layout="column" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2">
+             <md-subheader class="md-no-sticky">
+               <md-input-container flex="100">
+                 <input ng-model="search.who" placeholder="Search bucketlist">
+               </md-input-container>
+             </md-subheader>
+             <md-list>
+                <md-list-item ng-click="selectBucketlist(bucket)" class="md-1-line" ng-repeat="bucket in bucketlists | filter:search.who">
+                    <div layout="column">
+                        <h3>{{ bucket.name }}</h3>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-sidenav>
+        <md-content layout="column" layout-margin layout-padding flex>
+            <md-card layout="column" layout-align="center center">
+                <md-card-title layout-margin>
+                    <md-card-title-text>{{ bucket.name }}</md-card-title-text>
+                </md-card-title>
+                <form layout="row" ng-submit="createBucketItem({bid: bucket.id, bucketlist: bucket.id })">
+                    <md-whiteframe class="md-whiteframe container" layout="column">
+                        <div layout="row">
+                           <md-input-container layout="column" flex="80">
+                                <label>Enter an item...</label>
+                                <input type="text" ng-model="newitem.name"/>
+                            </md-input-container>
+                            <md-button flex="20" layout="column" class="md-raised md-primary" type="submit" flex ng-disabled="!newitem.name">
+                                <i class="material-icons iconize">add</i>
+                                <md-tooltip>Create your bucket</md-tooltip>
+                            </md-button>
+                        </div>
+                    </md-whiteframe>
+                </form>
+                <md-whiteframe layout="row" class="md-whiteframe container">
+                    <md-input-container layout="column" layout-align="center center">
+                        <md-list>
+                            <md-list-item class="md-2-line" ng-repeat="item in bucket.items | orderBy:'done'">
+                                <md-checkbox ng-model="item.done"></md-checkbox>
+                                <div class="md-list-item-text">
+                                  <h3>{{item.name}}</h3>
+                                </div>
+                                <md-button flex="10" class="md-raised" ng-click="deleteBucketItem($event, { bid: bucket.id, id: item.id})">
+                                    <i class="material-icons iconize">delete</i>
+                                    <md-tooltip>Delete item</md-tooltip>
+                            </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </md-input-container>
+                </md-whiteframe>
+            </md-card>
+        </md-content>
+    </div>
+</div>
