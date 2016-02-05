@@ -45,13 +45,6 @@ class BucketlistItemCreateView(generics.ListCreateAPIView):
     queryset = BucketlistItem.objects.all()
     serializer_class = BucketlistItemSerializer
 
-    # def get_queryset(self):
-    #     """Specifies the queryset used for the serialization"""
-    #     pk = self.kwargs.get('pk')
-    #     bucketlist = get_object_or_404(Bucketlist, pk=pk)
-    #     return BucketlistItem.objects.filter(
-    #         created_by=self.request.user, bucketlist=bucketlist)
-
     def perform_create(self, serializer):
         """"""
         pk = self.kwargs.get('pk')
@@ -72,10 +65,3 @@ class BucketlistItemDetailView(generics.RetrieveUpdateDestroyAPIView):
         """specifies the object used for `update`,
          `retrieve`, `destroy` actions"""
         return get_object_or_404(BucketlistItem, pk=self.kwargs.get('pk_item'))
-
-    # def delete(self, request, *args, **kwargs):
-    #     return self.destroy(request, *args, **kwargs)
-
-    # def get_object(self):
-    #     re self.queryset.filter(pk=self.kwargs.get('pk_item'))[0]
-

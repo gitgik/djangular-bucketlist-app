@@ -61,13 +61,30 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             }, function() {
                 Toast.show('Oops! There is a bucket with the same name.')
             })
+        }
+
+    $scope.editbucket = {};
+    $scope.toggleUpdate = function () {
+        if (!$scope.editbucket.enabled) {
+            $scope.editbucket.enabled = true;
+        }
+        else{
+            $scope.editbucket.enabled = undefined;
+        }
     }
 
-    $scope.updateBucket = function () {
-        var data = { name: $scope.editbucket.name, id: _id}
+    $scope.cancelEdit = function () {
+        $scope.editbucket.enabled = false;
+    }
+    $scope.updateBucket = function (bucketlist) {
+        var data = { name: $scope.editbucket.name, id: bucketlist.id}
         BucketListService.Bucketlists.updateBucket(data).$promise
         .then(function (response) {
-
+            Toast.show("Your bucketlist has been updated");
+            $scope.$emit('updateBucketList');
+            $scope.editbucket.enabled = false;
+            delete $scope.selectedBucket;
+            $scope.selectBucketlist(bucketlist);
         })
     };
 

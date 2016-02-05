@@ -125,8 +125,6 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         pk = Bucketlist.objects.latest('date_created').pk
         bucketlist_item_data = {"name": "Make a drone", "done": False}
-        import pdb;
-        pdb.set_trace()
         res = self.client.post(
             reverse('api.bucketlist.create', kwargs={'pk': pk}),
             bucketlist_item_data, format='json')

@@ -13,7 +13,7 @@
         <md-sidenav md-component-id="left" layout="column" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z1">
             <md-subheader class="md-no-sticky">
                <md-input-container>
-                 <input ng-model="search.who" placeholder="Search bucketlist" flex>
+                 <input ng-model="search.who" placeholder="Search for a bucket" flex>
                </md-input-container>
             </md-subheader>
             <md-list>
@@ -25,25 +25,27 @@
             </md-list>
         </md-sidenav>
         <md-content layout="row" layout-margin layout-padding flex>
-            <div flex="70" layout="column" layou-fill layout-margin layout-padding>
+            <div class="dashboard" flex="70" layout="column" layou-fill layout-margin layout-padding>
                 <md-subheader class="md-no-sticky">
                 Create your bucketlist
                 </md-subheader>
-                <div layout="row">
-                    <md-input-container flex="80">
-                        <label>What do you want to do?</label>
-                        <input type="text" ng-model="newbucket.name">
-                    </md-input-container>
-                    <md-button flex="10" class="md-raised md-primary" ng-click="createBucketlist()" flex ng-disabled="!newbucket.name">
-                        <i class="material-icons">send</i>
-                        <md-tooltip>Create your bucket</md-tooltip>
-                    </md-button>
+                <div>
+                    <form ng-submit="createBucketlist()" layout="row">
+                        <md-input-container flex="90">
+                            <label>What do you want to do?</label>
+                            <input type="text" ng-model="newbucket.name">
+                        </md-input-container>
+                        <md-button flex="10" class="md-raised md-primary custom-button" type="submit" flex ng-disabled="!newbucket.name">
+                            <i class="material-icons">add</i>
+                            <md-tooltip>Create your bucket</md-tooltip>
+                        </md-button>
+                    </form>
                 </div>
                 <div layout="row">
                     <md-card ng-if="selectedBucket.name">
                         <md-card-content>
                             <h4 ng-model="selectedBucket.name">
-                                <a class="bucket-title" ui-sref="viewBucket({id:selectedBucket.id})">{{selectedBucket.name}}</a>
+                                <a class="bucket-title md-primary" ui-sref="viewBucket({id:selectedBucket.id})">{{selectedBucket.name}}</a>
                             </h4>
                             <time id="timedisplay">
                                 <i class="material-icons">query_builder</i> {{selectedBucket.date_created  | amCalendar}}
@@ -54,7 +56,7 @@
                                 <md-tooltip>Add Items</md-tooltip>
                                 <i class="material-icons iconize">add</i>
                             </md-button>
-                            <md-button ng-click="openModal(selectedBucket.id)">
+                            <md-button ng-click="toggleUpdate()">
                                 <md-tooltip>Edit Bucket</md-tooltip>
                                 <i class="material-icons iconize">edit</i>
                             </md-button>
@@ -63,6 +65,22 @@
                                 <i class="material-icons iconize">delete</i>
                             </md-button>
                         </md-card-actions>
+                        <md-whiteframe class="md-whiteframe" layout="column" ng-if="editbucket.enabled">
+                            <md-input-container>
+                                <label>Edit the bucketlist name</label>
+                                <input type="text" ng-model="editbucket.name">
+                            </md-input-container>
+                            <div>
+                                <md-button ng-click="updateBucket(selectedBucket)">
+                                    <md-tooltip>Finish editting</md-tooltip>
+                                    DONE
+                                </md-button>
+                                <md-button ng-click="cancelEdit()">
+                                    <md-tooltip>Cancel editting</md-tooltip>
+                                    CANCEL
+                                </md-button>
+                            </div>
+                        </md-whiteframe>
                     </md-card>
                 </div>
             </div>

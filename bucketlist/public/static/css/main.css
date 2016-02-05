@@ -4,9 +4,12 @@
 }
 .description {
     color: #fff;
-    font-size: 2.5em;
+    font-size: 2.0em;
     font-family: 'Roboto Condensed', verdana;
     text-align: center
+}
+.dashboard {
+    background: #efefef;
 }
 .blist-image {
      width: 100%;
@@ -37,7 +40,9 @@
 .iconize {
     margin-top: .7em; position: relative;
 }
-
+.custom-button {
+    height: 1em; width: 1em;
+}
 .bucket-title {
     text-decoration: none;
     font-size: 34px;
