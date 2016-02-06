@@ -1,1 +1,1 @@
-web: python bucketlist/manage.py collectstatic --verbosity 0; bower install; gunicorn bucketlist.wsgi --pythonpath=bucketlist --log-file -
+web: python bucketlist/manage.py collectstatic --noinput --verbosity 0; gunicorn bucketlist.wsgi --pythonpath=bucketlist --log-file -
