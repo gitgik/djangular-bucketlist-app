@@ -17,7 +17,7 @@ A Django-powered Bucketlist API with an AngularJS consumption client
 * Git clone this repo to your PC
     ```$ git clone https://github.com/andela-ggikera/djangular-bucketlist-app.git```
 
------------------------------------------------------------
+
 * #### Dependencies
     1. Cd into your the cloned repo as such:
     ```$ cd djangular-bucketlist-app```
@@ -31,8 +31,12 @@ A Django-powered Bucketlist API with an AngularJS consumption client
     ```$ pip install -r requirements.txt```
     ```$ bower install```
 
-------------------------------------------------------------
-* #### Run it.
+
+* #### Run It
     Fire the engines using this one simple command:
     ```$ python manage.py runserver```
+    You can now access the bucketlist using ``` http://localhost:8000/```
+
+## Todo
+* Integrate Oauth for authenication.
 
