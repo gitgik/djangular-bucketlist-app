@@ -1,1 +1,1 @@
-web: gunicorn bucketlist.wsgi --log-file -
+web: python bucketlist/manage.py collectstatic --verbosity 0; gunicorn bucketlist.bucketlist.wsgi --log-file -
