@@ -188,33 +188,18 @@ class BucketlistItemTestCase(SetUpMixin, APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        bucketlist_item_data = {'name': 'Make a drone...', 'done': False}
-        bucketlist_item_data1 = {'name': 'Try this shit out...', 'done': False}
-        bucketlist_item_data2 = {'name': 'This be cwazy...', 'done': False}
+        bucketlist_item_data = {
+            'id': 1, 'name': 'Make a drone...', 'done': False}
 
         res = self.client.post(
             reverse('api.bucketlist.create', kwargs={'pk': 1}),
             bucketlist_item_data, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-        res = self.client.post(
-            reverse('api.bucketlist.create', kwargs={'pk': 1}),
-            bucketlist_item_data1, format='json')
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        # test deletion of item in another one(bucketlist)
-        res = self.client.post(
-            reverse('api.bucketlist.create', kwargs={'pk': 1}),
-            bucketlist_item_data2, format='json')
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-        res0 = self.client.delete(
+        res = self.client.delete(
             reverse('api.bucketlist.item', kwargs={'pk': 1, 'id': 1}),
             format='json')
-        res1 = self.client.delete(
-            reverse('api.bucketlist.item', kwargs={'pk': 2, 'id': 1}),
-            format='json')
-        self.assertEqual(res0.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(res1.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class SearchBucketlistTestCase(SetUpMixin, APITestCase):
