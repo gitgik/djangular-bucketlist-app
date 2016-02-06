@@ -1,8 +1,9 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from restapi import views
 
 urlpatterns = [
+    url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^auth/signup/$', views.UserView.as_view(), name="signup"),
     url(r'^auth/$', 'rest_framework_jwt.views.obtain_jwt_token',
         name='login'),

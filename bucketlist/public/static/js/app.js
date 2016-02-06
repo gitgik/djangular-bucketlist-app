@@ -49,7 +49,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpP
         });
 
 
-    $urlRouterProvider.otherwise('/signup');
+    //$urlRouterProvider.otherwise('/signup');
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
