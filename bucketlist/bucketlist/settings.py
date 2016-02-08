@@ -101,17 +101,7 @@ if os.getenv('TRAVIS_BUILD', None):
     }
 else:
     DATABASES['default'] = dj_database_url.config()
-
-# Parse database configuration from $DATABASE_URL
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'bucketlist',
-#         'USER': 'Administrator',
-#         'PASSWORD': 'administrator',
-#         'HOST': '127.0.0.1',
-#     }
-# }
+    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
