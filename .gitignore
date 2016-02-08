@@ -46,16 +46,9 @@ nosetests.xml
 coverage.xml
 *,cover
 
-# Translations
-*.mo
-*.pot
-
 # Django stuff:
 *.log
 */migrations/*
-
-# Sphinx documentation
-docs/_build/
 
 # PyBuilder
 target/
@@ -65,17 +58,6 @@ target/
 
 # Bower components
 bower_components
-
-# System files
-.DS_Store
-
-# Database
-db.sqlite3
-
-# eclipse IDE
-.project
-.pydevproject
-.settings
 
 # Migrations
 migrations
