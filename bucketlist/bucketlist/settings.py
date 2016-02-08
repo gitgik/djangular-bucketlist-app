@@ -152,7 +152,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-BOWER_COMPONENTS_ROOT = '/bucketlist/public/static/lib/'
+BOWER_COMPONENTS_ROOT = '/bucketlist/static/lib/'
 
 BOWER_INSTALLED_APPS = {
     "angular",
@@ -172,7 +172,7 @@ BOWER_INSTALLED_APPS = {
 }
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, "public/static"),
+    os.path.join(PROJECT_ROOT, "static"),
 )
 
 STATICFILES_FINDERS = (
