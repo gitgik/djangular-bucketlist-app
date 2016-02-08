@@ -88,20 +88,28 @@ WSGI_APPLICATION = 'bucketlist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-DATABASES = {}
-if os.getenv('TRAVIS_BUILD', None):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'bucketlist',
-            'USER': 'Administrator',
-            'PASSWORD': 'administrator',
-            'HOST': '127.0.0.1',
-        }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bucketlist',
+#         'USER': 'Administrator',
+#         'PASSWORD': 'administrator',
+#         'HOST': '127.0.0.1',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd44cceiof4hpjn',
+        'USER': 'yxostokpgwqdwj',
+        'PASSWORD': 'uwI_28gAz2NbsFtCggmRTetj_K',
+        'HOST': 'ec2-54-225-199-245.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
-else:
-    DATABASES['default'] = dj_database_url.config()
-    DATABASES['default']['ENGINE'] = 'django_postgrespool'
+}
+
+# DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
