@@ -17,6 +17,9 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+PROJECT_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), ".."),
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -36,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
@@ -144,12 +148,37 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 STATIC_URL = '/static/'
 
+BOWER_COMPONENTS_ROOT = '/bucketlist/public/static/lib/'
+
+BOWER_INSTALLED_APPS = {
+    "angular",
+    "font-awesome",
+    "angular-route",
+    "angular-material",
+    "angular-animate",
+    "angular-aria",
+    "angular-messages",
+    "angular-moment",
+    "moment",
+    "angular-resource",
+    "angular-toastr",
+    "ngstorage",
+    "angular-ui-router",
+    "moment"
+}
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "public/static"),
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
 )
 
 REST_FRAMEWORK = {
