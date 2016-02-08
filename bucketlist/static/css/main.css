@@ -26,11 +26,12 @@
     display: block; position: absolute;
     top: 0;
     height: 100%; width: 100%;
-    background-color: rgba(0,0,0,0.42);
+    background-color: rgba(0,0,0,0.52);
 }
 
 .container {
-    min-width: 20em;
+    min-width: inherit;
+    overflow: auto;
 }
 .labels {
     color: #01579b
@@ -48,7 +49,10 @@
     margin-top: .7em; position: relative;
 }
 .custom-button {
-    height: 1em; width: 1em;
+    padding: .4em; top: .7em;
+}
+.button-add-item {
+    padding: .8em;
 }
 .bucket-title {
     text-decoration: none;
