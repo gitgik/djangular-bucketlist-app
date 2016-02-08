@@ -3,8 +3,7 @@
     "description": "A Django-powered Bucketlist API with an AngularJS consumption client",
     "version": "0.0.1",
     "engines": {
-        "node": ">=4.0.0",
-        "npm": "2.1.x",
+        "node": ">=4.0.0"
     },
     "scripts": {
         "preinstall": "npm install --save bower",
