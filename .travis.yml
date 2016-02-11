@@ -12,6 +12,6 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  - python manage.py test
-  - coverage run --omit='*virtualenv*' manage.py test
+  - python manage.py test --noinput
+  - coverage run --omit='*virtualenv*' manage.py test --noinput
 after_success: coveralls
