@@ -50,6 +50,3 @@ target/
 
 # Bower components
 bower_components
-
-# Migrations
-migrations

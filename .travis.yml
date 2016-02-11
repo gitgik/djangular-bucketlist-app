@@ -10,9 +10,6 @@ env:
 install:
   - pip install -r requirements.txt
   - pip install coveralls
-before_script:
-  - psql -c 'create database bucketlist;' -U postgres
-  - cd bucketlist && python manage.py migrate
 # command to run tests
 script:
   - python manage.py test
