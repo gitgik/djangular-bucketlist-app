@@ -1,4 +1,6 @@
 language: python
+services:
+  - postgresql
 python:
   - "2.7"
 env:
@@ -8,9 +10,11 @@ env:
 install:
   - pip install -r requirements.txt
   - pip install coveralls
+before_script:
+  - psql -c 'create database bucketlist;' -U travis
+  - cd bucketlist && python manage.py migrate
 # command to run tests
 script:
-  - cd bucketlist
-  - ./manage.py test
+  - python manage.py test
   - coverage run --omit='*virtualenv*' manage.py test
 after_success: coveralls
