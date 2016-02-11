@@ -12,6 +12,7 @@ install:
   - pip install coveralls
 # command to run tests
 script:
+  - cd bucketlist
   - python manage.py test --noinput
   - coverage run --omit='*virtualenv*' manage.py test --noinput
 after_success: coveralls
