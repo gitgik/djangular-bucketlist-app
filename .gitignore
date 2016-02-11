@@ -42,10 +42,6 @@ nosetests.xml
 coverage.xml
 *,cover
 
-# Django stuff:
-*.log
-*/migrations/*
-
 # PyBuilder
 target/
 
