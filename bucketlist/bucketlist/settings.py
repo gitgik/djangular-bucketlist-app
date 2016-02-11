@@ -100,7 +100,7 @@ if os.getenv('TRAVIS_BUILD', None):
         }
     }
 else:
-    DATABASES['default'] = dj_database_url.config()
+    DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
