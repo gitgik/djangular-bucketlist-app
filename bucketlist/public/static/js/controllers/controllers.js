@@ -51,6 +51,11 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
     });
 
+    $scope.$on('removeOldBucket', function(data) {
+        $scope.selectedBucket = undefined;
+        $scope.selectedBucketlist(data.name);
+    });
+
     $scope.selectBucketlist = function (bucketlist) {
         $scope.selectedBucket = bucketlist
         $scope.editbucket.enabled = false;
@@ -94,9 +99,8 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         .then(function (response) {
             Toast.show("Your bucketlist has been updated");
             $scope.$emit('updateBucketList');
-            $scope.editbucket.enabled = false;
-            delete $scope.selectedBucket;
-            $scope.selectBucketlist(bucketlist);
+            console.log(JSON.stringify(response));
+            $scope.$emit('removeOldBucket', response);
         })
     };
 

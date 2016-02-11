@@ -1,6 +1,10 @@
 language: python
 python:
   - "2.7"
+env:
+  global:
+  - DJANGO_SETTINGS_MODULE='settings.testing'
+  - TRAVIS_BUILD=true
 # command to install dependencies
 install:
   - pip install -r requirements.txt
@@ -14,6 +18,3 @@ script:
   - ./manage.py test
   - coverage run --omit='*virtualenv*' manage.py test
 after_success: coveralls
-env:
-  global:
-    - TRAVIS_BUILD=true
