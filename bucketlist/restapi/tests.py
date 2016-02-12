@@ -27,6 +27,15 @@ class SetUpMixin(object):
 class UserAuthTestCase(SetUpMixin, APITestCase):
     """Test suite for user authentication."""
 
+    def test_user_can_signup(self):
+        """Test the user can signup for the service."""
+        fake = Faker()
+        username = fake.first_name()
+        password = fake.name()
+        data = {"username": username, "password": password}
+        response = self.client.post('/auth/signup/', data=data)
+        self.assertContains(response, username, status_code=201)
+
     def test_user_can_login(self):
         """Test that the user can be authenticated to access service."""
         response = self.client.post('/auth/', data=self.user_data)
@@ -222,14 +231,28 @@ class SearchBucketlistTestCase(SetUpMixin, APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='JWT {0}'.format(jwt_token.get('token')))
         bucketlist_data = {'name': 'Before I get to D1'}
+        another_one = {'name': 'Come back for more'}
         response = self.client.post(
             reverse('api.bucketlists'),
             bucketlist_data,
             format='json'
         )
+        another_response = self.client.post(
+            reverse('api.bucketlists'),
+            another_one,
+            format='json'
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(another_response.status_code, status.HTTP_201_CREATED)
 
         response = self.client.get(
             '{0}?q=Before I get'.format(reverse('api.bucketlists')),
             format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(
+            response, 'Before I get to D1', status_code=200)
+
+        response = self.client.get(
+            '{0}?q=Bad search...'.format(reverse('api.bucketlists')),
+            format='json')
+        self.assertEqual(response.data, [])

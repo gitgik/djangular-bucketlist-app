@@ -1,11 +1,17 @@
 <div class="wrapper" layout="column" layout-fill>
     <md-toolbar>
         <div class="md-toolbar-tools">
+            <md-button ui-sref="dashboard">
+                <i class="material-icons iconize">arrow_back</i>
+                <md-tooltip>Back</md-tooltip>
+            </md-button>
             <md-button ng-click="toggleLeft()" hide-gt-sm>
                 <i class="material-icons iconize">menu</i>
             </md-button>
             <div flex class="md-padding">
-                <a>My bucketlist</a></div>
+                <a ui-sref="dashboard" class="md-padding" flex="90">My bucketlist</a>
+            </div>
+
             <a flex="10" ui-sref="logout">Logout</a>
         </div>
     </md-toolbar>
