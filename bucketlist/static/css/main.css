@@ -65,8 +65,8 @@
     cursor: pointer;
 }
 .main-container {
-    opacity: 0.6;
-    filter: alpha(opacity=80);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
 }
 .signup-container {
     min-width: 20em;
