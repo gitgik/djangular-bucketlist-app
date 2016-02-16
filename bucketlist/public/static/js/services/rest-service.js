@@ -26,7 +26,7 @@ app.factory('BucketListService', ['$resource', function($resource) {
         {
             createBucket: { method: 'POST'},
             getAllBuckets: { method: 'GET', isArray: true},
-            getOneBucket: { method: 'GET', isArray: false},
+            getOneBucket: { method: 'GET'},
             updateBucket: { method: 'PUT'},
             deleteBucket: { method: 'DELETE'}
         },
@@ -35,8 +35,8 @@ app.factory('BucketListService', ['$resource', function($resource) {
         BucketlistItems: $resource('/bucketlists/:bid/items/:id/', {bid:"@bid", id: "@id"},
         {
             createBucketItem: { method: 'POST'},
-            getOneBucketItem: { method: 'GET', isArray: false },
-            updateBucketItem: { method: 'PUT' },
+            getOneBucketItem: { method: 'GET'},
+            updateBucketItem: { method: 'PUT'},
             deleteBucketItem: { method: 'DELETE'}
         },
         { stripTrailingSlashes: false })
