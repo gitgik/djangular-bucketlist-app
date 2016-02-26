@@ -1,4 +1,5 @@
-# djangular-bucketlist-app [![Build Status](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app.svg?branch=master)](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app) [![Coverage Status](https://coveralls.io/repos/github/andela-ggikera/djangular-bucketlist-app/badge.svg?branch=develop)](https://coveralls.io/github/andela-ggikera/djangular-bucketlist-app?branch=develop) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+# djangular-bucketlist-app
+[![Build Status](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app.svg?branch=master)](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app) [![Coverage Status](https://coveralls.io/repos/github/andela-ggikera/djangular-bucketlist-app/badge.svg?branch=develop)](https://coveralls.io/github/andela-ggikera/djangular-bucketlist-app?branch=develop) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 A Django-powered Bucketlist API with an AngularJS consumption client.
 
 ## Technologies used
