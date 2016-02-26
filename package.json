@@ -1,0 +1,15 @@
+{
+    "name": "djangular-bucketlist-app",
+    "description": "A Django-powered Bucketlist API with an AngularJS consumption client",
+    "version": "0.0.1",
+    "engines": {
+        "node": ">=4.0.0"
+    },
+    "scripts": {
+        "preinstall": "npm install --save bower",
+        "postinstall": "./node_modules/.bin/bower install"
+    },
+    "dependencies": {
+        "bower": "^1.3.2"
+    }
+}

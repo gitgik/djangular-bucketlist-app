@@ -1,0 +1,56 @@
+
+    <div class="blist-image">
+        <div layout="column" layout-align="center center" class="content">
+            <h3 class="description" layout="row" layout-align="center center">
+                    Creating bucketlists has never been this easy!
+                    Start your journey now.
+            </h3>
+            <md-card layout="column" ng-if="user.signup" layout-align="center center" class="main-container">
+                <md-card-title layout-margin>
+                    <md-card-title-text>Sign up</md-card-title-text>
+                </md-card-title>
+                <md-whiteframe class="md-whiteframe-7dp signup-container" layout="column">
+                    <md-input-container layout="row">
+                        <label>Username</label>
+                        <input type="text" ng-model="user.username" onfocus />
+                    </md-input-container>
+                    <md-input-container layout="row">
+                        <label>Password</label>
+                        <input ng-model="user.password" type="password"/>
+                    </md-input-container>
+                    <md-input-container layout="row" layout-align="center center">
+                        <div layout="row" layout-sm="column" layout-margin>
+                            <md-button class="md-raised md-primary" flex="50" ng-click="register()">Register</md-button>
+                        </div>
+                    </md-input-container>
+                    <md-whiteframe layout-margin class="md-primary">
+                        <label class="labels" ng-click="navLogin()">Already have an account? Log in</label>
+                    </md-whiteframe>
+                </md-whiteframe>
+            </md-card>
+            <md-card layout="column" ng-if="user.login == true" layout-align="center center" class="main-container">
+                <md-card-title layout-margin>
+                    <md-card-title-text>Log in</md-card-title-text>
+                </md-card-title>
+                <md-whiteframe class="md-whiteframe-7dp signup-container" layout="column">
+                    <md-input-container layout="row">
+                        <label>Username</label>
+                        <input type="text" ng-model="user.username" onfocus />
+                    </md-input-container>
+                    <md-input-container layout="row">
+                        <label>Password</label>
+                        <input ng-model="user.password" type="password"/>
+                    </md-input-container>
+                    <md-input-container layout="row" layout-align="center center">
+                        <div layout="row" layout-sm="column" layout-margin>
+                            <md-button class="md-raised" flex="50" ng-click="login()" ng-disabled="!user">Login</md-button>
+                        </div>
+                    </md-input-container>
+                    <md-whiteframe layout-margin>
+                        <label class="labels" ng-click="navSignup()">Dont have an account? Sign up</label>
+                    </md-whiteframe>
+                </md-whiteframe>
+            </md-card>
+        </div>
+    </div>
+

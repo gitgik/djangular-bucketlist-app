@@ -2,26 +2,14 @@
 __pycache__/
 *.py[cod]
 
-# C extensions
-*.so
+# virtualenv
+venv/
 
 # Distribution / packaging
 .Python
+.env
 env/
 build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -43,17 +31,6 @@ nosetests.xml
 coverage.xml
 *,cover
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-*/migrations/*
-
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
@@ -62,17 +39,3 @@ target/
 
 # Bower components
 bower_components
-
-# System files
-.DS_Store
-
-# Database
-db.sqlite3
-
-# eclipse IDE
-.project
-.pydevproject
-.settings
-
-# Migrations
-migrations

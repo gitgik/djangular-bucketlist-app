@@ -1,0 +1,110 @@
+.content {
+    z-index: 1000 !important;
+    position: relative;
+}
+.description {
+    color: #fff;
+    font-size: 2.0em;
+    font-family: 'Roboto Condensed', verdana;
+    text-align: center
+}
+
+.bucket-container {
+    padding-right: 2em;
+    padding-left: 2em;`
+}
+.dashboard {
+    background: #efefef;
+    min-width: 30em;
+    max-width: 50%;
+}
+
+.dashboard-item {
+    background: #efefef;
+    width: 100%;
+}
+
+.item-form {
+    width: 100%;
+}
+
+.icon-sizer {
+    top: .3em; position: relative;
+}
+.lowered {
+    top: 2em;
+}
+
+.uppered {
+    top: -3em; position: relative;
+}
+
+.blist-image {
+    width: 100%;
+    height: 100% !important;
+    display: block;
+    position: relative;
+    background-image: url('../images/bucket-list.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0; right: 0; left: 0; bottom: 0;
+}
+
+.blist-image:after {
+    content: "";
+    display: block; position: absolute;
+    top: 0;
+    height: 100%; width: 100%;
+    background-color: rgba(0,0,0,0.42);
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 10em;
+    overflow: auto;
+}
+.labels {
+    color: #01579b
+    cursor: pointer;
+}
+.main-container {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+.signup-container {
+    min-width: 20em;
+    padding: 1.7em;
+}
+.iconize {
+    margin-top: .7em; position: relative;
+}
+.custom-button {
+    padding: .4em; top: .7em;
+}
+.button-add-item {
+    padding: .8em;
+}
+.bucket-title {
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Roboto Condensed', verdana;
+    font-weight: 400;
+    text-align: center;
+    color: rgb(63,81,181);
+}
+.item-padding {
+    min-width: 10em;
+    text-align: left;
+}
+
+.instance {
+    border: 1px solid #efefef;
+}
+.item-container {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 2em;
+    min-width: 20em;
+}

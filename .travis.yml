@@ -1,0 +1,18 @@
+language: python
+services:
+  - postgresql
+python:
+  - "2.7"
+env:
+  global:
+  - TRAVIS_BUILD=true
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+# command to run tests
+script:
+  - cd bucketlist
+  - python manage.py test --noinput
+  - coverage run --omit='*virtualenv*' manage.py test --noinput
+after_success: coveralls
