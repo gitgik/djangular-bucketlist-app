@@ -14,6 +14,10 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             $scope.user.signup = true;
         }
 
+        /**
+         * This function handles the a user login using the bucketlist service
+         *
+         */
         $scope.login = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.auth.login(data).$promise.then(function(response){
@@ -31,6 +35,10 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
 
         };
 
+        /**
+         * This function handles a new user registration using a create promise
+         *
+         */
         $scope.register = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.users.create(data).$promise.then($scope.login)

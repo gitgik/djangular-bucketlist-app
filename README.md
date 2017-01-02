@@ -1,4 +1,5 @@
-# djangular-bucketlist-app [![Build Status](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app.svg?branch=master)](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app) [![Coverage Status](https://coveralls.io/repos/github/andela-ggikera/djangular-bucketlist-app/badge.svg?branch=develop)](https://coveralls.io/github/andela-ggikera/djangular-bucketlist-app?branch=develop) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+# djangular-bucketlist-app
+[![Build Status](https://travis-ci.org/gitgikdjangular-bucketlist-app.svg?branch=master)](https://travis-ci.org/andela-ggikera/djangular-bucketlist-app) [![Coverage Status](https://coveralls.io/repos/github/gitgik/djangular-bucketlist-app/badge.svg?branch=develop)](https://coveralls.io/github/andela-ggikera/djangular-bucketlist-app?branch=develop) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 A Django-powered Bucketlist API with an AngularJS consumption client.
 
 ## Technologies used
@@ -19,7 +20,7 @@ A Django-powered Bucketlist API with an AngularJS consumption client.
     ```
 * Git clone this repo to your PC
     ```
-        $ git clone https://github.com/andela-ggikera/djangular-bucketlist-app.git
+        $ git clone https://github.com/gitgik/djangular-bucketlist-app.git
     ```
 
 
@@ -56,4 +57,3 @@ A Django-powered Bucketlist API with an AngularJS consumption client.
 * Integrate Oauth for authenication.
 * Use angular 2.0 on the consumption client.
 * Add voice command functionality :-D
-

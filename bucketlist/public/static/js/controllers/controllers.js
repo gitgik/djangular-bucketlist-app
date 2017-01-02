@@ -14,6 +14,10 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             $scope.user.signup = true;
         }
 
+        /**
+         * This function handles the a user login using the bucketlist service
+         *
+         */
         $scope.login = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.auth.login(data).$promise.then(function(response){
@@ -31,6 +35,10 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
 
         };
 
+        /**
+         * This function handles a new user registration using a create promise
+         *
+         */
         $scope.register = function () {
             var data = {username: $scope.user.username, password: $scope.user.password};
             BucketListService.users.create(data).$promise.then($scope.login)
@@ -51,11 +59,6 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
     });
 
-    $scope.$on('removeOldBucket', function(data) {
-        $scope.selectedBucket = undefined;
-        $scope.selectedBucketlist(data.name);
-    });
-
     $scope.selectBucketlist = function (bucketlist) {
         $scope.selectedBucket = bucketlist
         $scope.editbucket.enabled = false;
@@ -73,6 +76,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             function(response) {
                 // emit the trigger to a fresh UI update
                 $scope.$emit('updateBucketList');
+                console.log(JSON.stringify(response));
                 Toast.show('Yeiy! Bucketlist created successfully!')
                 // nullify the new bucketlist object
                 $scope.newbucket.name = null;
@@ -99,8 +103,9 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         .then(function (response) {
             Toast.show("Your bucketlist has been updated");
             $scope.$emit('updateBucketList');
-            console.log(JSON.stringify(response));
-            $scope.$emit('removeOldBucket', response);
+            $scope.editbucket.enabled = false;
+            delete $scope.selectedBucket;
+            $scope.selectBucketlist(bucketlist);
         })
     };
 
@@ -134,6 +139,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
 
         $scope.bucketlists = BucketListService.Bucketlists.getAllBuckets();
         $scope.$on('updateBucketlistItems', function () {
+            console.log("HERE IS THE STATE PARAM " + $stateParams.id);
             $scope.bucket = BucketListService.Bucketlists.getOneBucket({
                 id: $stateParams.id
             });
@@ -142,17 +148,20 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
         $scope.bucket = BucketListService.Bucketlists.getOneBucket({
             id: $stateParams.id
         });
+        console.log(JSON.stringify($scope.bucket));
 
         $scope.createBucketItem = function (params) {
             var data = angular.extend({}, params);
             data.name = $scope.newitem.name;
             BucketListService.BucketlistItems.createBucketItem(data)
             .$promise.then(function(response) {
+                    console.log(JSON.stringify(response));
                     $scope.newitem.name = null
                     $scope.$emit('updateBucketlistItems');
                     Toast.show('Item created successfully');
                 }, function(error) {
                     //creating an item failed
+                    console.log(JSON.stringify(error));
                     if (error.status == 400) {
                         Toast.show('An item with the same name already exists');
                     }
@@ -192,6 +201,7 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
                     Toast.show('Bucketlist Item Deleted successfully.');
                 }, function (response_error) {
                     // Failed to delete item
+                    console.log(JSON.stringify(response_error));
                     Toast.show('Could not delete item. Please try again.');
                 });
             }, function() {});
@@ -203,5 +213,3 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             .then(function () {});
     }
     }])
-
-
