@@ -205,5 +205,3 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             .then(function () {});
     }
     }])
-
-
