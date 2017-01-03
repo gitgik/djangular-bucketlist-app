@@ -42,16 +42,21 @@ A Django-powered Bucketlist API with an AngularJS consumption client.
         ```
 
 
-* #### Run It
-    Fire the engines using this one simple command:
-        ```
-            $ python manage.py collectstatic --noinput
-            $ python manage.py runserver
-        ```
+* #### Collecting Static Files
+    To collect all your static files for django to easily access them from one folder, simply do:
+    ```
+    $ python manage.py collectstatic --noinput
+    ```
+
+* #### Running It
+    On your terminal, run the server using this one simple command:
+    ```
+    $ python manage.py runserver
+    ```
     You can now access the bucketlist service on your browser by using
-        ```
-            http://localhost:8000/
-        ```
+    ```
+      http://localhost:8000/
+    ```
 
 ## Todo
 * Integrate Oauth for authenication.
