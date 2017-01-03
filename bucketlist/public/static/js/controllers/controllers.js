@@ -97,6 +97,11 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
     $scope.cancelEdit = function () {
         $scope.editbucket.enabled = false;
     }
+
+    /**
+     * This function updates an existing bucketlist.
+     * @param  {object} bucketlist The bucketlist object
+     */
     $scope.updateBucket = function (bucketlist) {
         var data = { name: $scope.editbucket.name, id: bucketlist.id}
         BucketListService.Bucketlists.updateBucket(data).$promise
