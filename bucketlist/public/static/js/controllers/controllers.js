@@ -194,6 +194,11 @@ angular.module('bucketlist.controllers', ['ngMaterial'])
             })
         };
 
+        /**
+         * Delete a bucketlist item from a given bucketlist.
+         * @param  {object} ev         An event object
+         * @param  {object} bucketlist A bucketlist object
+         */
         $scope.deleteBucketItem = function(ev, bucketlist) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
