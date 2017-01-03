@@ -27,17 +27,17 @@ A Django-powered Bucketlist API with an AngularJS consumption client.
 * #### Dependencies
     1. Cd into your the cloned repo as such:
         ```
-            $ cd djangular-bucketlist-app
+        $ cd djangular-bucketlist-app
         ```
 
     2. Create and fire up your virtual environment:
         ```
-            $ virtualenv env
-            $ source env/bin/activate
+        $ virtualenv env
+        $ source env/bin/activate
         ```
     3. Install the django dependencies needed to run the app:
         ```
-            $ pip install -r requirements.txt
+        $ pip install -r requirements.txt
         ```
     4. Install the bower components for the angularJS client
         ```
