@@ -35,10 +35,13 @@ A Django-powered Bucketlist API with an AngularJS consumption client.
             $ virtualenv env
             $ source env/bin/activate
         ```
-    3. Install the dependencies needed to run the app:
+    3. Install the django dependencies needed to run the app:
         ```
-            $ pip install -r requirements.txt```
-            $ bower install
+            $ pip install -r requirements.txt
+        ```
+    4. Install the bower components for the angularJS client
+        ```
+        $ bower install
         ```
 
 
